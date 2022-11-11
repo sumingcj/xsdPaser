@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MainBody"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MainBody">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="OrgnlMsgId"/>
+				<xs:element ref="BizCtrlInf"/>
+				<xs:element ref="ImgInf" minOccurs="0"/>
+				<xs:element ref="ExtInfs" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OrgnlMsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BizCtrlInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PrcCd" type="MaxMin9AlphaNumericText"/>
+				<xs:element name="PrcMsg" type="Max256Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImgInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ImgBtNo" type="MaxMin32AlphaNumericText"/>
+				<xs:element name="SumNum" type="Max4NumericText"/>
+				<xs:element name="Img" type="File"/>
+				<!-- add by kfzx-fup 2017-09-18 1801_A 增加文件扩展名标签 -->
+				<xs:element name="FileSuffix" type="Max4AlphaNumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+		<xs:element name="ExtInfs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ExtInf" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ExtInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max150Text"/>
+				<xs:element name="Value" type="Max500Text"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="jpg"/>
+			<xs:enumeration value="jpG"/>
+			<xs:enumeration value="jPg"/>
+			<xs:enumeration value="Jpg"/>
+			<xs:enumeration value="jPG"/>
+			<xs:enumeration value="JpG"/>
+			<xs:enumeration value="JPg"/>
+			<xs:enumeration value="JPG"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="File">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="4"/>
+			<xs:pattern value="[0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max256Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin9AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[a-zA-Z0-9]{9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin32AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="32"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9]{32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max150Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="150"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max500Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

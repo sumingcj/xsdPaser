@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MainBody"/>
+				<xs:element name="CdesSgntr" type="Signature"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MainBody">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="BindInf"/> <!-- 绑定状态变更信息-->
+				<xs:element ref="SubInf"/> <!-- 供应链平台信息 -->
+				<xs:element ref="AppInf"/> <!-- 接入点信息 -->
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35AlphaNumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BindInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="OprType" type="AltrnTp"/><!-- 状态变更类型 AT01 新增   AT02 修改 -->
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="SubInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SupId" type="MaxMin6AlphaNumericText"/><!-- 供应链平台ID -->
+				<xs:element name="SupName" type="Max60Text"/><!-- 供应链平台名称 -->
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="AppInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppId" type="Max10AlphaNumericText"/><!-- 接入点ID -->
+				<xs:element name="AppName" type="Max60Text"/><!-- 接入点名称 -->
+				<xs:element name="AppMode" type="AccessTp"/> <!-- 接入点类型 SM01自主   SM02集中 -->
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="Max35AlphaNumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+            <xs:pattern value="[a-zA-Z0-9]{1,35}"/>
+        </xs:restriction>
+    </xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max60Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin6AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="6"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="[a-zA-Z0-9]{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max10AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AltrnTp">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AT01"/>
+			<xs:enumeration value="AT02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AccessTp">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SM01"/>
+			<xs:enumeration value="SM02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Signature">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

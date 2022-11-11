@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="CommercialDraft353" type="CommercialDraft353"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CommercialDraft353">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageIdentification1"/>
+			<xs:element name="CntrlMdl" type="CntrlMdlCode" minOccurs="0"/>
+			<xs:element name="AcctInf" type="AccountInf1" minOccurs="0" maxOccurs="5000"/>
+			</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageIdentification1">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35NumericText"/>
+			<xs:element name="CreDtTm" type="ISODateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccountInf1">
+		<xs:sequence>
+			<xs:element name="CmonId" type="CmonCd"/>
+			<xs:element name="SocialCreditCode" type="MaxMin18AlphaNumericText"/>
+			<xs:element name="Nm" type="Max60Text"/>
+			<xs:element name="Acct" type="Account1"/>
+			<xs:element name="AccType" type="WhiteAccTypeCode"/>
+			<xs:element name="AcctStatus" type="WhiteAcctStatusCode"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Account1">
+		<xs:sequence>
+			<xs:element name="Id" type="Max32AlphaNumericText"/>
+			<xs:element name="Nm" type="Max60Text"/>
+			<xs:element name="AcctSvcr" type="MaxMin12NumericText"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max60Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin12NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="12"/>
+			<xs:maxLength value="12"/>
+			<xs:pattern value="[0-9]{1,12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin18AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="18"/>
+			<xs:maxLength value="18"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,18}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="CmonCd">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+			<xs:pattern value="[\-a-zA-Z0-9]{1,10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WhiteAccTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="WAT01"/>
+			<xs:enumeration value="WAT02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WhiteAcctStatusCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="WAS01"/>
+			<xs:enumeration value="WAS02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CntrlMdlCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CM00"/>
+			<xs:enumeration value="CM01"/>
+			<xs:enumeration value="CM02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max32AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"></xs:minLength>
+			<xs:maxLength value="32"></xs:maxLength>
+			<xs:pattern value="[0-9A-Za-z]{1,32}"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

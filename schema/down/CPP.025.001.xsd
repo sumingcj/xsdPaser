@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MainBody"/>
+				<xs:element name="CdesSgntr" type="Signature"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MainBody">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<!--原报文标识号-->
+				<xs:element ref="OrgnlMsgId"/>
+				<!--贴现机构信息-->
+				<xs:element ref="DsctInInf"/>
+				<!--贴现申请人信息-->
+				<xs:element ref="DiscInf"/>
+				<!--应答信息-->
+				<xs:element ref="SgnUpInf"/>
+				<!--签约信息-->
+				<xs:element ref="CreditInfo" minOccurs="0" maxOccurs="1"/>
+				<!--扩展信息-->
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1"/>
+				
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="OrgnlMsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	
+	<!--发送方信息-->
+	<xs:element name="DsctInInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1"/><!-- 直接业务主体信息 -->
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/><!-- 非直接业务主体信息 -->
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- 直接业务主体信息 -->
+	<xs:element name="DrtPtcptInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PtcptId" type="Max32AlphaNumericSymbolText"/><!-- 业务主体识别代码 -->
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- 非直接业务主体信息 -->
+	<xs:element name="NoDrtPtcptInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max60Text" minOccurs="0" maxOccurs="1"/><!-- 名称 -->
+				<xs:element name="SocCode" type="Max32AlphaNumericSymbolText" minOccurs="0" maxOccurs="1"/><!-- 统一识别代码 -->
+				<xs:element name="DistTp" type="DistTp"/><!-- 识别类型 -->
+				<xs:element ref="CdAcctInf" minOccurs="0" maxOccurs="1"/><!-- 票据账户信息 -->
+				<xs:element ref="BrAcctInf" minOccurs="0" maxOccurs="1"/><!-- 银行账户信息 -->
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- 票据账户信息 -->
+	<xs:element name="CdAcctInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Acct" type="Max32AlphaNumericSymbolText"/><!-- 账号 -->
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- 银行账户信息 -->
+	<xs:element name="BrAcctInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AcctName" type="Max150Text"/><!-- 账号 -->
+				<xs:element name="Acct" type="Max32AlphaNumericSymbolText"/><!-- 账号 -->
+				<xs:element name="OpenBrId" type="MaxMin9NumericText"/><!-- 开户行机构参与者代码 -->
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	
+	<xs:element name="DiscInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element name="BrkBrId" type="MaxMin9NumericText" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="Name" type="Max60Text"/>
+				<xs:element name="SocCode" type="Max32AlphaNumericSymbolText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	
+	<xs:element name="SgnUpInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Dt" type="ISODate" />
+				<xs:element name="SgnUpMk" type="SignUpMarkCode"/>
+				<xs:element name="OtherInf" type="Max150Text" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+
+    <xs:element name="CreditInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Status" type="DsctSignStatus" />
+				<xs:element name="Limit" type="CurrencyOfTenThous" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="DueTo" type="ISODate" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	
+	<xs:element name="ExtInfs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ExtInf" minOccurs="1" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="ExtInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max150Text" />
+				<xs:element name="Value" type="Max500Text" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:simpleType name="MaxMin9NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[0-9]{9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>	
+	
+    <xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="MaxMin6NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="6"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="[0-9]{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max32AlphaNumericSymbolText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9\-]{1,32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max150Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="150"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max500Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--
+	<xs:simpleType name="Max32AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	-->
+	<xs:simpleType name="SignUpMarkCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SU00"/>
+			<xs:enumeration value="SU01"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="DistTp">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DT01"/>
+			<xs:enumeration value="DT02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="DsctSignStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ST01"/>
+			<xs:enumeration value="ST02"/>
+			<xs:enumeration value="ST03"/>
+			<xs:enumeration value="ST04"/>
+			<xs:enumeration value="ST05"/>
+			<xs:enumeration value="ST06"/>
+			<xs:enumeration value="ST07"/>
+		</xs:restriction>
+	</xs:simpleType>	
+	
+	<xs:complexType name="CurrencyOfTenThous">
+		<xs:simpleContent>
+			<xs:extension base="CurrencyOfTenThous_SimpleType">
+				<xs:attribute name="Ccy" type="CurrencyCode" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="CurrencyOfTenThous_SimpleType">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="(\d{1,12})|(\d{1,12}\.\d{1,2})"/>
+		</xs:restriction>
+	</xs:simpleType>
+		<xs:simpleType name="CurrencyCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="CNY"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Signature">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max60Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

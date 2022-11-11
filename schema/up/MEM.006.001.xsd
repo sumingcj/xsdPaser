@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MainBody"/>
+				 <xs:element name="PtcptSgntr" type="Signature"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+ 
+    <!--报文体-->	
+	<xs:element name="MainBody">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="Brinfo"/>
+				<xs:element ref="InfElmt"/>
+				<xs:element ref="ExtInfs" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="Brinfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MbrId" type="MaxMin6NumericText"/>
+				<xs:element name="MainBrId" type="MaxMin9NumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+
+
+	<xs:element name="InfElmt">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CorpRep" type="Max60Text" minOccurs="0"/>
+				<xs:element name="RegCap" type="CurrencyAndAmountRegCap" minOccurs="0"/>
+				<xs:element name="Addr" type="Max60Text" minOccurs="0"/>
+				<xs:element name="Attn" type="Max20Text" minOccurs="0"/>
+				<xs:element name="Tel" type="Max20Text2" minOccurs="0"/>
+				<xs:element name="FxCd" type="Max20Text1" minOccurs="0"/>
+				<xs:element name="ZpCd" type="MaxMin6NumericText" minOccurs="0"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+				<xs:element name="Email" type="Max75Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	
+	<xs:element name="ExtInfs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ExtInf" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="ExtInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max150Text"/>
+				<xs:element name="Value" type="Max500Text"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:simpleType name="MaxMin9NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[0-9]{1,9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="CurrencyAndAmountRegCap">
+		<xs:simpleContent>
+			<xs:extension base="CurrencyAndAmount_SimpleType">
+				<xs:attribute name="Ccy" type="CurrencyCode" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="CurrencyCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="CNY"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CurrencyAndAmount_SimpleType">
+		<xs:restriction base="xs:decimal">
+			<!-- <xs:pattern value="(\d{1,13})|(\d{1,13}\.)|(\d{1,12}\.\d{0,1})|(\d{1,11}\.\d{0,2})|(\.\d{1,2})"/> -->
+			<xs:pattern value="(\d{1,13})|(\d{1,13}\.\d{1,2})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max20Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max20Text1">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+			<xs:pattern value="(0[0-9]{2,3}-)?([2-9][0-9]{6,7})+(-[0-9]{1,4})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="Max20Text2">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+			<xs:pattern value="((\+86)?0?[1][345789][0-9]{9})|(0[0-9]{2,3}-)?([2-9][0-9]{6,7})+(-[0-9]{1,4})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max60Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max75Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="75"/>
+			<xs:pattern value="[a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-]+(\.[a-zA-Z0-9_\-]+)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max150Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="150"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:simpleType name="Max500Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	
+
+	<xs:simpleType name="MaxMin6NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="6"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="[0-9]{1,6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	   <xs:simpleType name="Signature">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="2000"/>
+        </xs:restriction>
+    </xs:simpleType>
+	
+	<xs:simpleType name="MemSysStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FA00"/>
+			<xs:enumeration value="FA01"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	
+ 
+</xs:schema>

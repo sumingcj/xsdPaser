@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MainBody"/>
+				<xs:element name="CdesSgntr" type="Signature"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MainBody">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="StlInf"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="StlInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="StlReqNo" type="Max24AlphaNumericText"/>
+				<xs:element name="StlTm" type="ISODateTime"/>
+				<xs:element ref="StlTp"/>
+				<xs:element ref="SetMode"/>
+				<xs:element ref="ClrTp"/>
+				<xs:element name="SetAmt" type="CurrencyAndAmount"/>
+				<xs:element name="DealId" type="Max20AlphaNumericText" minOccurs="0"/>
+				<xs:element name="CdNo" type="Max30NumericText" minOccurs="0"/>
+				<xs:element name="Dbtr" type="MaxMin9NumericText"/>
+				<xs:element name="Crtr" type="MaxMin9NumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="StlTp">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="RE1011"/>
+				<xs:enumeration value="RE1021"/>
+				<xs:enumeration value="RE1022"/>
+				<xs:enumeration value="RE1023"/>
+				<xs:enumeration value="RE1024"/>
+				<xs:enumeration value="RE1031"/>
+				<xs:enumeration value="RE1032"/>
+				<xs:enumeration value="RE2011"/>
+				<xs:enumeration value="RE2021"/>
+				<xs:enumeration value="RE3011"/>
+				<xs:enumeration value="RE3021"/>
+				<xs:enumeration value="RE3022"/>
+				<xs:enumeration value="RE3023"/>
+				<xs:enumeration value="RE3024"/>
+				<!-- add by zhouyao 20200825  2010A 新增买断式贴现/存托-->
+				<xs:enumeration value="RE4011"/>
+				<xs:enumeration value="RE6011"/>
+				<!-- add kfzx-fansd 2018-12-27  新增扣费排队通知业务类型-->
+				<xs:enumeration value="T10008"/>
+				<!-- add kfzx-wang 2021-10-26  新增回购式贴现,回购式贴现赎回,批量清算类型-->
+				<xs:enumeration value="RE4021"/>
+				<xs:enumeration value="RE4022"/>
+				<xs:enumeration value="RE7011"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="SetMode">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="ST01"/>
+				<xs:enumeration value="ST02"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ClrTp">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="CT01"/>
+				<xs:enumeration value="CT02"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:simpleType name="Signature">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max24AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="24"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,24}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurrencyAndAmount_SimpleType">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="(\d{1,16})|(\d{1,16}\.\d{1,2})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CurrencyAndAmount">
+		<xs:simpleContent>
+			<xs:extension base="CurrencyAndAmount_SimpleType">
+				<xs:attribute name="Ccy" type="CurrencyCode" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="CurrencyCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="CNY"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max20AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,20}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max30NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+			<xs:pattern value="[0-9]{1,30}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin9NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[0-9]{1,9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

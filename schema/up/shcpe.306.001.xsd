@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CommercialDraft306"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CommercialDraft306">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="SettleInfo"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+ 	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SettleInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DealNo" type="Max35NumericText"/>
+				<xs:element ref="RequestType"/>
+				<xs:element name="Amt" type="CurrencyAndAmount"/>
+				<xs:element ref="PrcSts"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="CurrencyAndAmount_SimpleType">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="(\d{1,16})|(\d{1,16}\.)|(\d{1,16}\.\d{0,1})|(\d{1,16}\.\d{0,2})|(\.\d{1,2})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CurrencyAndAmount">
+		<xs:simpleContent>
+			<xs:extension base="CurrencyAndAmount_SimpleType">
+				<xs:attribute name="Ccy" type="CurrencyCode" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="CurrencyCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="CNY"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="RequestType">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="RE4011"/>
+				<xs:enumeration value="RE4021"/>
+				<xs:enumeration value="RE4022"/>
+				<xs:enumeration value="RE4041"/>
+				<xs:enumeration value="RE4051"/>
+				<xs:enumeration value="RE4061"/>
+				<xs:enumeration value="RE2011"/>
+				<xs:enumeration value="RE4032"/>
+				<xs:enumeration value="RE4071"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PrcSts">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="PR04"/>
+				<xs:enumeration value="PR09"/>
+				<xs:enumeration value="PR12"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+</xs:schema>

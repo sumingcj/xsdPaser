@@ -1,0 +1,1081 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MainBody" />
+				<xs:element name="CdesSgntr" type="Signature" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="MainBody">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element name="ReqMsgInf" type="ReqMsgInformation"/>
+				<xs:element ref="AutoSend"/>
+				<xs:element ref="DraftBasicInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="DraftInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+<!--&lt;!&ndash;	&lt;!&ndash;待确认&ndash;&gt;&ndash;&gt;-->
+<!--	<xs:element name="ReqMsgInf" type="ReqMsgInformation">-->
+<!--	</xs:element>-->
+
+
+<!--	&lt;!&ndash;待确认&ndash;&gt;-->
+	<xs:element name="AutoSend">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AutoSend" type="YON" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="ReqMsgInformation">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="NES002"/>
+				<xs:element ref="NES003"/>
+				<xs:element ref="NES004"/>
+				<xs:element ref="NES006"/>
+				<xs:element ref="NES007"/>
+				<xs:element ref="NES008"/>
+				<xs:element ref="NES009"/>
+				<xs:element ref="NES010"/>
+				<xs:element ref="NES011"/>
+				<xs:element ref="NES012"/>
+				<xs:element ref="NES013"/>
+				<xs:element ref="NES015"/>
+				<xs:element ref="NCP013"/>
+				<xs:element ref="NCP015"/>
+				<xs:element ref="NCP016"/>
+				<xs:element ref="CPR015"/>
+				<xs:element ref="CPR016"/>
+				<xs:element ref="CIM027"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="NES002">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="DwrInf"/>
+				<xs:element ref="SgntrMk"/>
+				<xs:element ref="RrIdRel" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="DraftBasicInf"/>
+				<xs:element ref="BusiInf"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="DwrInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="SgntrMk">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PrxySgntr" type="ProxySignatureCode"/>
+				<xs:element name="PtcptSgntr" minOccurs="0" maxOccurs="1" type="Max2000Text"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RrIdRel">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RelTp" type="RelTp"/>
+				<xs:element name="CurBrId" type="MaxMin9NumericText"/>
+				<xs:element name="OrgnlBrId" type="MaxMin9NumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="BusiInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Dt" type="ISODate"/>
+				<xs:element name="BusiCategory" type="BusiCategory"/>
+				<xs:element name="Note" minOccurs="0" maxOccurs="1" type="Max150Text"/>
+				<xs:element ref="BnedMtmrkInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="OtherOpInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="BtNoInf" minOccurs="0" maxOccurs="1"/>
+				<!-- nes002 -->
+				<xs:element name="UcondlConsgnmtMrk" type="ConsignmentCode"></xs:element>
+				<!-- nes007 -->
+				<xs:element name="DsctRt" type="PercentageRate"/>
+				<xs:element name="DsctInt" type="CurrencyAndAmount"/>
+				<xs:element name="DsctBBOpenDt" minOccurs="0" maxOccurs="1" type="ISODate"/>
+				<xs:element name="DsctBBDueDt" minOccurs="0" maxOccurs="1" type="ISODate"/>
+				<!-- nes008 -->
+				<xs:element name="DsctBBRt" type="PercentageRate"/>
+				<xs:element name="DsctBBInt" type="CurrencyAndAmount"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="DrtPtcptInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PtcptId" type="Max32AlphaNumericSymbolText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="NoDrtPtcptInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max60Text"/>
+				<xs:element name="SocCode" minOccurs="0" maxOccurs="1" type="Max32AlphaNumericSymbolText"/>
+				<xs:element name="DistTp" type="DistTp"/>
+				<xs:element ref="CdAcctInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="BrAcctInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CdAcctInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Acct" type="Max32AlphaNumericSymbolText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="BrAcctInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AcctName" type="Max150Text"/>
+				<xs:element name="Acct" type="Max32AlphaNumericText"/>
+				<xs:element name="OpenBrId" type="MaxMin9NumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="BnedMtmrkInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="BnedMtmrk" type="BanEndorsementMarkCode"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="OtherOpInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="OtherOp" type="Max150Text"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="BtNoInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="BtNo" type="Max150Text"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="NES003">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="DwrInf"/>
+				<xs:element ref="SgntrMk"/>
+				<xs:element ref="RrIdRel" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="DraftBasicInf"/>
+				<xs:element ref="BusiInf"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NES004">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="WrntInf"/>
+				<xs:element ref="SgntrMk" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="RrIdRel" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="DraftBasicInf"/>
+				<xs:element ref="BusiInf"/>
+				<xs:element ref="GrntInf"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="WrntInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="GrntInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="NES006">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="BedInf"/>
+				<xs:element ref="SgntrMk"/>
+				<xs:element ref="RrIdRel" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="DraftBasicInf"/>
+				<xs:element ref="BusiInf"/>
+				<xs:element ref="BBedInf"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="BedInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="BBedInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="NES007">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="DsctOutInf"/>
+				<xs:element ref="SgntrMk"/>
+				<xs:element ref="RrIdRel" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="DraftBasicInf"/>
+				<xs:element ref="BusiInf"/>
+				<xs:element ref="DsctInInf"/>
+				<xs:element ref="SettleInf"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="DsctOutInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="DsctInInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="SettleInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SetMode" type="SettleType"/>
+				<xs:element name="ClrTp" type="ClearType"/>
+				<xs:element name="SetDate" type="ISODate"/>
+				<xs:element name="SetAmt" minOccurs="0" maxOccurs="1" type="CurrencyAndAmount"/>
+				<xs:element ref="AcctInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="AcctInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AcctName" type="Max150Text"/>
+				<xs:element name="AcctNo" type="Max32AlphaNumericText"/>
+				<xs:element name="BrId" type="MaxMin9NumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="NES008">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="DsctInInf"/>
+				<xs:element ref="DraftBasicInf"/>
+				<xs:element ref="BusiInf"/>
+				<xs:element ref="SettleInf"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="NES009">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="PlgorInf"/>
+				<xs:element ref="SgntrMk"/>
+				<xs:element ref="RrIdRel" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="DraftBasicInf"/>
+				<xs:element ref="BusiInf"/>
+				<xs:element ref="PlgePsnInf"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="PlgorInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="PlgePsnInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="NES010">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="SgntrMk"/>
+				<xs:element ref="RrIdRel" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="DraftBasicInf"/>
+				<xs:element ref="BusiInf"/>
+				<xs:element ref="PlgePsnInf"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="NES011">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="PstPsnInf"/>
+				<xs:element ref="SgntrMk"/>
+				<xs:element ref="RrIdRel" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="DraftBasicInf"/>
+				<xs:element ref="BusiInf"/>
+				<xs:element ref="SettleInf"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="PstPsnInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="NES012">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="RecerInf"/>
+				<xs:element ref="SgntrMk" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="RrIdRel" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="DraftBasicInf"/>
+				<xs:element ref="BusiInf"/>
+				<xs:element ref="RecorInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="SettleInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="AttInfCol" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RecerInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RecerRrIdRel">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RelTp" type="RelTp"/>
+				<xs:element name="CurBrId" type="MaxMin9NumericText"/>
+				<xs:element name="OrgnlBrId" type="MaxMin9NumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RecorInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="AttInfCol">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="AttInf" minOccurs="1" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+    <xs:element name="AttInf">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="FileType" type="AttTypeCode" />
+                <xs:element name="AttBtNo" type="MaxMin32AlphaNumericText" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="AttTypeCode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="其他"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+	<xs:element name="NES013">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="OrgnlMsgId"/>
+				<xs:element ref="RecorInf"/>
+				<xs:element ref="SgntrMk" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="RrIdRel" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="DraftBasicInf"/>
+				<xs:element ref="BusiInf"/>
+				<xs:element ref="SettleInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="OrgnlMsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="NES015">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="ApplyInf"/>
+				<xs:element ref="RrIdRel" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="SgntrMk" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="DraftBasicInf"/>
+				<xs:element ref="BusiInf"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ApplyInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="NCP013">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="CdInf"/>
+				<xs:element ref="MvInfElmt"/>
+				<xs:element ref="ExtInfs"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CdInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CdNo" type="Max30NumericText"/>
+				<xs:element name="CdRange" type="Max25Text"/>
+				<xs:element name="CdAmt" type="CurrencyAndAmount"/>
+				<xs:element name="StdAmt" type="CurrencyAndAmount"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MvInfElmt">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MvTp"/>
+				<xs:element name="MvOutDt" type="ISODate"/>
+				<xs:element name="MvOutBrId" type="MaxMin9NumericText"/>
+				<xs:element name="MvInDt" type="ISODate"/>
+				<xs:element name="MvInBrId" type="MaxMin9NumericText"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MvTp">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="VT01"/>
+				<xs:enumeration value="VT02"/>
+				<xs:enumeration value="VT03"/>
+				<xs:enumeration value="VT04"/>
+				<xs:enumeration value="VT05"/>
+				<xs:enumeration value="VT06"/>
+				<xs:enumeration value="VT07"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+
+	<xs:element name="NCP015">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="CdInf"/>
+				<xs:element ref="AddGuaInf"/>
+				<xs:element ref="ExtInfs"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="AddGuaInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AddAppDt" type="ISODate"/>
+				<xs:element name="AddAppBrId" type="MaxMin9NumericText"/>
+				<xs:element name="MvOutBrId" type="MaxMin9NumericText"/>
+				<xs:element name="AddGrntBrId" type="MaxMin9NumericText"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="NCP016">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="CdInf"/>
+				<xs:element ref="RqInf"/>
+                <xs:element ref="ExtInfs"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RqInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CfmAppDt" type="ISODate"/>
+				<xs:element name="CfmAppBrId" type="MaxMin9NumericText"/>
+				<xs:element name="CfmTp" type="CfmTp"/>
+				<xs:element name="CfmAddTp" type="CfmAddTp"/>
+				<xs:element ref="ImgInfs" minOccurs="0"/>
+				<xs:element name="Dt" type="ISODate"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RvBrId" type="MaxMin9NumericText"/>
+				<xs:element name="DealId" type="Max20AlphaNumericText"/>
+				<xs:element ref="BBTp"/>
+				<xs:element ref="BBRsnCode" minOccurs="0"/>
+				<xs:element name="RqDealOpi" type="Max150Text"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!--	<xs:element name="CfmTp">-->
+	<xs:simpleType name="CfmTp">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VM01"/>
+			<xs:enumeration value="VM02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--	</xs:element>-->
+	<!--	<xs:element name="CfmAddTp">-->
+	<xs:simpleType name="CfmAddTp">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VN01"/>
+			<xs:enumeration value="VN02"/>
+			<xs:enumeration value="VN03"/>
+			<xs:enumeration value="VN04"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--	</xs:element>-->
+	<xs:element name="ImgInfs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ImgInf" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImgInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ImgType" type="ImgType"/>
+				<xs:element name="ImgBtNo" type="MaxMin32AlphaNumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="ImgType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="IM01"/>
+			<xs:enumeration value="IM03"/>
+			<xs:enumeration value="IM04"/>
+			<xs:enumeration value="IM05"/>
+			<xs:enumeration value="IM06"/>
+			<xs:enumeration value="IM07"/>
+			<xs:enumeration value="IM08"/>
+			<xs:enumeration value="IM09"/>
+			<xs:enumeration value="IM10"/>
+			<xs:enumeration value="IM11"/>
+			<xs:enumeration value="IM12"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="CPR015">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="CdInf"/>
+				<xs:element ref="XfeInf"/>
+				<xs:element ref="ExtInfs"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="XfeInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Dt" type="ISODate"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RvBrId" type="MaxMin9NumericText"/>
+				<xs:element name="TrsRes" type="Max150Text"/>
+				<xs:element ref="ImgInfs"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CPR016">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="RqInf"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="DraftBasicInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CdNo" type="Max30NumericText"/>
+				<xs:element name="CdRange" type="Max25Text" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="CdAmt" type="CurrencyAndAmount"/>
+				<xs:element name="StdAmt" type="CurrencyAndAmount" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="DraftInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CdMedia" type="CdMedia"/>
+				<xs:element name="CdType" type="DraftTypeCode"/>
+				<xs:element name="CdSource" type="CdSource" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="IssDt" type="ISODate"/>
+				<xs:element name="DueDt" type="ISODate"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="Instr" type="Max150Text" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ExtInfs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ExtInf" minOccurs="1" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ExtInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max150Text" />
+				<xs:element name="Value" type="Max500Text" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:simpleType name="Signature">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+
+	<xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="MaxMin9AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max256Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max150Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="150"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max500Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="Max25Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+
+	<xs:simpleType name="CdSource">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CS01"/>
+			<xs:enumeration value="CS02"/>
+			<xs:enumeration value="CS03"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="DraftTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AC01"/>
+			<xs:enumeration value="AC02"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CdMedia">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ME01"/>
+			<xs:enumeration value="ME02"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="CurrencyAndAmount">
+		<xs:simpleContent>
+			<xs:extension base="CurrencyAndAmount_SimpleType">
+				<xs:attribute name="Ccy" type="CurrencyCode" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="CurrencyAndAmount_SimpleType">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="(\d{1,16})|(\d{1,16}\.\d{1,2})"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="MaxMin30NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="30" />
+			<xs:maxLength value="30" />
+			<xs:pattern value="[0-9]{30}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="YON">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurrencyCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CNY" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin6NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="6"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="[0-9]{1,6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProxySignatureCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PS00"/>
+			<xs:enumeration value="PS01"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max2000Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RelTp">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RT01"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin9NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[0-9]{1,9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BusiCategory">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BC01"/>
+			<xs:enumeration value="BC02"/>
+			<xs:enumeration value="BC03"/>
+			<xs:enumeration value="BC04"/>
+			<xs:enumeration value="BC05"/>
+			<xs:enumeration value="BC06"/>
+			<xs:enumeration value="BC07"/>
+			<xs:enumeration value="BC08"/>
+			<xs:enumeration value="BC09"/>
+			<xs:enumeration value="BC10"/>
+			<xs:enumeration value="BC11"/>
+			<xs:enumeration value="BC12"/>
+			<xs:enumeration value="BC13"/>
+			<xs:enumeration value="BC14"/>
+			<xs:enumeration value="BC15"/>
+			<xs:enumeration value="BC16"/>
+			<xs:enumeration value="BC17"/>
+			<xs:enumeration value="BC18"/>
+			<xs:enumeration value="BC19"/>
+			<xs:enumeration value="BC20"/>
+			<xs:enumeration value="BC21"/>
+			<xs:enumeration value="BC22"/>
+			<xs:enumeration value="BC23"/>
+			<xs:enumeration value="BC24"/>
+			<xs:enumeration value="BC25"/>
+			<xs:enumeration value="BC26"/>
+			<xs:enumeration value="BC27"/>
+			<xs:enumeration value="BC28"/>
+			<xs:enumeration value="BC29"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DistTp">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DT01"/>
+			<xs:enumeration value="DT02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max32AlphaNumericSymbolText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9\-]{1,32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max32AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max60Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BanEndorsementMarkCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EM00"/>
+			<xs:enumeration value="EM01"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConsignmentCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CC00"/>
+			<xs:enumeration value="CC01"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SettleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ST01"/>
+			<xs:enumeration value="ST02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ClearType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CT01"/>
+			<xs:enumeration value="CT02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PercentageRate">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(0\.\d{1,6})|[0,1]{1}|1\.[0]{1,6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max30NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+			<xs:pattern value="[0-9]{1,30}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin32AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="32"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="BBTp">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="BBT01"/>
+				<xs:enumeration value="BBT02"/>
+				<xs:enumeration value="BBT03"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="BBRsnCode">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="BBR01"/>
+				<xs:enumeration value="BBR02"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:simpleType name="Max20AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,20}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="CIM027">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="ShowrInf"/>
+				<xs:element ref="SgntrMk" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="RrIdRel" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="DraftBasicInf"/>
+				<xs:element ref="BusiInf"/>
+				<xs:element ref="ShoweeInf"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ShowrInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ShoweeInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AppBrId" type="MaxMin6NumericText"/>
+				<xs:element ref="DrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="NoDrtPtcptInf" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

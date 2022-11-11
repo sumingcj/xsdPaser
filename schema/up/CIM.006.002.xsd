@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MainBody"/>
+				<xs:element name="PtcptSgntr" type="Signature" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MainBody">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="RqInf"/>
+				<xs:element ref="ComrclDrft" minOccurs="0"/>
+				<xs:element ref="ImgInf"/>
+				<xs:element ref="ExtInfs" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RqInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="UplBrId" type="MaxMin9NumericText"/>
+				<xs:element name="UpldMd" type="UpldMode"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ComrclDrft">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CdType" type="DraftTypeCode"/>
+				<xs:element name="CdNo" type="Max30NumericText"/>
+				<xs:element name="CdAmt" type="CurrencyAndAmount"/>
+				<xs:element name="DueDt" type="ISODate"/>
+				<xs:element name="AcptAcctSvcr" type="MaxMin12NumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImgInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ImgType" type="ImgType" minOccurs="0"/>
+				<xs:element name="Img" type="File"/>
+				<!-- add by kfzx-fup 2017-09-05 1801_A 报文增加文件后缀标签 -->
+				<xs:element name="FileSuffix" type="Max4AlphaNumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ExtInfs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ExtInf" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ExtInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max150Text"/>
+				<xs:element name="Value" type="Max500Text"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="jpg"/>
+			<xs:enumeration value="jpG"/>
+			<xs:enumeration value="jPg"/>
+			<xs:enumeration value="Jpg"/>
+			<xs:enumeration value="jPG"/>
+			<xs:enumeration value="JpG"/>
+			<xs:enumeration value="JPg"/>
+			<xs:enumeration value="JPG"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="File">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImgType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="IM01"/>
+			<xs:enumeration value="IM02"/>
+			<xs:enumeration value="IM03"/>
+			<xs:enumeration value="IM04"/>
+			<xs:enumeration value="IM05"/>
+			<xs:enumeration value="IM06"/>
+			<xs:enumeration value="IM07"/>
+			<xs:enumeration value="IM08"/>
+			<xs:enumeration value="IM09"/>
+			<xs:enumeration value="IM10"/>
+			<xs:enumeration value="IM11"/>
+			<xs:enumeration value="IM12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CurrencyAndAmount">
+		<xs:simpleContent>
+			<xs:extension base="CurrencyAndAmount_SimpleType">
+				<xs:attribute name="Ccy" type="CurrencyCode" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="CurrencyAndAmount_SimpleType">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="(\d{1,16})|(\d{1,16}\.\d{1,2})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurrencyCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CNY"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DraftTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AC01"/>
+			<xs:enumeration value="AC02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UpldMode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="UM01"/>
+			<xs:enumeration value="UM02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin9NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[0-9]{9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max30NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+			<xs:pattern value="[0-9]{1,30}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin12NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="12"/>
+			<xs:maxLength value="12"/>
+			<xs:pattern value="[0-9]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max150Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="150"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max500Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Signature">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

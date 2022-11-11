@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CommercialDraft351"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element> 
+    <!--报文体-->	
+	<xs:element name="CommercialDraft351">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId" />
+				<xs:element ref="PcInf" />
+				<xs:element ref="BrInfElmt"  minOccurs="0" maxOccurs="3000"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	
+	
+	 
+                	
+    <!--报文标识-->	        
+	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>     
+    <!--分片信息-->	
+	<xs:element name="PcInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ChngNb" type="Max8NumericText"/>
+				<xs:element name="TtlNb" type="Max8NumericText"/>
+				<xs:element name="StartNb" type="Max8NumericText"/>
+				<xs:element name="EndNb" type="Max8NumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>   
+ 	<!--参与者变更信息  -->
+ 	<xs:element name="BrInfElmt">	
+		<xs:complexType >
+			<xs:sequence>
+				<xs:element ref="BkInf"  minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>    </xs:element>
+    
+    
+	<!--参与者信息 -->	
+	<xs:element name="BkInf">
+	    <xs:complexType >
+			<xs:sequence>
+				<xs:element name="BrId" type="MaxMin9NumericText"  />
+				<xs:element name="Nm" type="Max60Text" />
+				<xs:element name="AcctSvcr" type="MaxMin12NumericText" minOccurs="0"/>
+				<xs:element name="PrxyId" type="Max32AlphaNumericText" minOccurs="0"/>
+				<xs:element name="PrxyAcctSvcr" type="MaxMin12NumericText" minOccurs="0"/>
+				<xs:element name="FAcctSts" type="BrStatus" minOccurs="0"/>
+				<xs:element name="FAcctNo" type="Max32AlphaNumericText" minOccurs="0"/>
+				<xs:element name="BrStatus" type="BrStatus" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+ 
+ 
+     <xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType> 
+	
+	
+    <xs:simpleType name="Max8NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+			<xs:pattern value="[0-9]{1,8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+
+    <xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+
+
+    <xs:simpleType name="MaxMin9NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[0-9]{1,9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+
+    <xs:simpleType name="Max60Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+
+   <xs:simpleType name="MaxMin12NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="12"/>
+			<xs:maxLength value="12"/>
+			<xs:pattern value="[0-9]{1,12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+    <xs:simpleType name="Max32AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	 
+    <xs:simpleType name="BrStatus">
+		<xs:restriction base="xs:string">
+		  <xs:enumeration value="ST01"/>
+		  <xs:enumeration value="ST02"/>
+		</xs:restriction>
+	</xs:simpleType>
+ 
+</xs:schema>

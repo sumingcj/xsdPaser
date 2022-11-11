@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="StpType">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="ST01"/>
+				<xs:enumeration value="ST02"/>
+				<xs:enumeration value="ST03"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max150Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="150"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="StpRgtInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="StpInf"/>
+				<xs:element ref="StpAplInf" minOccurs="0"/>
+				<xs:element ref="ImgInfs" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="StpInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="StpDt" type="ISODate"/>
+				<xs:element name="StpTm" type="ISODateTime"/>
+				<xs:element ref="StpType" minOccurs="0"/>
+				<xs:element name="StpRsn" type="Max150Text"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="Max60Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max32AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin12NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="12"/>
+			<xs:maxLength value="12"/>
+			<xs:pattern value="[0-9]{1,12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin18AlphaNumericSymbolText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="18"/>
+			<xs:maxLength value="18"/>
+			<xs:pattern value="[a-zA-Z0-9\-]{1,18}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="StpAplInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max60Text"/>
+				<xs:element name="Acct" type="Max32AlphaNumericText" minOccurs="0"/>
+				<xs:element name="AcctSvcr" type="MaxMin12NumericText" minOccurs="0"/>
+				<xs:element name="SocCode" type="MaxMin18AlphaNumericSymbolText" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RlvStpRgt">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="RlvStpPayInf"/>
+				<xs:element ref="ImgInfs" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RlvStpPayType">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="RT01"/>
+				<xs:enumeration value="RT02"/>
+				<xs:enumeration value="RT03"/>
+				<xs:enumeration value="RT05"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="RlvStpPayInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RlvStpTm" type="ISODateTime"/>
+				<xs:element name="RlvStpPayDt" type="ISODate"/>
+				<xs:element name="RlvStpPayType"/>
+				<xs:element name="RlvStpPayRsn" type="Max150Text"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MainBody">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="CdInfs" maxOccurs="unbounded"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="MaxMin32AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="32"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="ImgInfs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ImgInf" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImgInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ImgBtNo" type="MaxMin32AlphaNumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="Signature">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MainBody"/>
+				<xs:element name="CdesSgntr" type="Signature"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="Max30NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+			<xs:pattern value="[0-9]{1,30}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CdInfs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CdInf"/>
+				<xs:element ref="StpRgtInf" minOccurs="0"/>
+				<xs:element ref="RlvStpRgt" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CdInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CdNo" type="Max30NumericText"/>
+				<xs:element name="CdAmt" type="CurrencyAndAmount"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="CurrencyAndAmount_SimpleType">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="(\d{1,16})|(\d{1,16}\.\d{1,2})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CurrencyAndAmount">
+		<xs:simpleContent>
+			<xs:extension base="CurrencyAndAmount_SimpleType">
+				<xs:attribute name="Ccy" type="CurrencyCode" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="CurrencyCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="CNY"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="Max500Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="500" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:element name="ExtInfs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ExtInf" minOccurs="1" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ExtInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max150Text" />
+				<xs:element name="Value" type="Max500Text" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

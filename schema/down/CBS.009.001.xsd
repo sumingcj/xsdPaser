@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2019 ICBC
+版权所有 中国工商银行软件开发中心 保留所有权利
+版本历史:
+创建日期：2019-10-15
+创建作者：kfzx-yub
+创建版本：201912 应收账款项目
+功能描述：直连接口流转登记结果通知报文（下行）格式校验xsd文件
+修改日期：
+修改人：
+修改版本：
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<!-- 元素声明 start -->
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MainBody" />
+				<xs:element name="CdesSgntr" type="Signature" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MainBody">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId" />
+				<xs:element ref="OrgnlMsgId" />
+				<xs:element ref="BizCtrlInf" />
+				<xs:element ref="ComrclDrft" minOccurs="0"/>
+				<xs:element ref="EndInf" minOccurs="0"/>
+				<xs:element ref="EndorsorInf" minOccurs="0"/>
+				<xs:element ref="EndorseeInf" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35AlphaNumericText" />
+				<xs:element name="CreDtTm" type="ISODateTime" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OrgnlMsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35AlphaNumericText" />
+				<xs:element name="CreDtTm" type="ISODateTime" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BizCtrlInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PrcCd" type="MaxMin9AlphaNumericText" />
+				<xs:element name="PrcMsg" type="Max256Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ComrclDrft">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="BpNo" type="MaxMin30NumericText" />
+				<xs:element name="CdRange" type="Max25Text" />
+				<xs:element name="CdTnRange" type="Max25Text" />
+				<xs:element name="CdAmt" type="CurrencyAndAmount" />
+				<xs:element name="CdNum" type="Max10NumericText" />
+				<xs:element name="StdAmt" type="CurrencyAndAmount" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EndInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="EndRgtDt" type="ISODate" />
+				<xs:element name="BnedMtmrk" type="BanEndorsementMarkCode" />
+				<xs:element name="EndorsorNote" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EndorsorInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Code" type="MaxMin6AlphaNumericText" />
+				<xs:element name="Name" type="Max60Text" />
+				<xs:element name="Acct" type="Max32AlphaNumericText" />
+				<xs:element name="SocCode" type="MaxMin18AlphaNumericSymbolText" />
+				<xs:element name="EnterNo" type="MaxMin9AlphaNumericText" />
+				<xs:element name="Eres" type="Max2000Text" />
+				<xs:element name="AcctSvcr" type="MaxMin12NumericText" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EndorseeInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Code" type="MaxMin6AlphaNumericText" />
+				<xs:element name="Name" type="Max60Text" />
+				<xs:element name="Acct" type="Max32AlphaNumericText" />
+				<xs:element name="AcctSvcr" type="MaxMin12NumericText" />
+				<xs:element name="SocCode" type="MaxMin18AlphaNumericSymbolText" />
+				<xs:element name="EnterNo" type="MaxMin9AlphaNumericText" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- 元素声明 end-->
+	
+	<!-- 类型定义 start-->
+	<xs:simpleType name="Signature">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="2000" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime" />
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin9AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[a-zA-Z0-9]{9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max256Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="256" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin30NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="30" />
+			<xs:maxLength value="30" />
+			<xs:pattern value="[0-9]{30}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max25Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="25" />
+			<!-- 修改内容：正则校验从10修改成12 修改日期：2020/8/24 修改人：罗文涛  版本号：2010_A-->
+			<!-- <xs:pattern value="[0-9]{10}\,[0-9]{10}" /> -->
+			<xs:pattern value="[0-9]{12}\,[0-9]{12}" />
+		</xs:restriction>
+	</xs:simpleType>	
+	<xs:complexType name="CurrencyAndAmount">
+		<xs:simpleContent>
+			<xs:extension base="CurrencyAndAmount_SimpleType">
+				<xs:attribute name="Ccy" type="CurrencyCode" use="required" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!--modified by 修改人：张杰  修改日期：2020/8/30   版本号：2010_A 修改内容：由于标准金额修改，正则校验支持两位小数   -->
+	<xs:simpleType name="CurrencyAndAmount_SimpleType">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="(\d{1,10})|(\d{1,10}\.\d{1,2})" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurrencyCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CNY" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!--modified by 修改人：张杰  修改日期：2020/9/01   版本号：2010_A 修改内容：由于标准金额修改，修改长度12   -->
+	<xs:simpleType name="Max10NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="12" />
+			<xs:pattern value="[0-9]{1,12}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date" />
+	</xs:simpleType>
+	<xs:simpleType name="BanEndorsementMarkCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EM00" />
+			<xs:enumeration value="EM01" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max150Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="150" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin6AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="6"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="[a-zA-Z0-9]{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max60Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="60" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max32AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin18AlphaNumericSymbolText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="18"/>
+			<xs:maxLength value="18"/>
+			<xs:pattern value="[a-zA-Z0-9\-]{18}"/>
+			
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max2000Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="2000" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin12NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="12" />
+			<xs:maxLength value="12" />
+			<xs:pattern value="[0-9]{12}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- 类型定义 end-->
+</xs:schema>

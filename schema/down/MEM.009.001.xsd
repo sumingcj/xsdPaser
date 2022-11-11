@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="DocTp">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DC01"/>
+            <xs:enumeration value="DC02"/>
+            <xs:enumeration value="DC03"/>
+            <xs:enumeration value="DC04"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AttTypeCode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FT01"/>
+            <xs:enumeration value="FT02"/>
+            <xs:enumeration value="FT03"/>
+            <xs:enumeration value="FT04"/>
+            <xs:enumeration value="FT05"/>
+            <xs:enumeration value="FT06"/>
+            <xs:enumeration value="FT07"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CreditRatings">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9a-zA-Z\+\-]{1,3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CorpTp">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CT01"/>
+            <xs:enumeration value="CT02"/>
+            <xs:enumeration value="CT03"/>
+            <xs:enumeration value="CT04"/>
+            <xs:enumeration value="CT05"/>
+            <xs:enumeration value="CT06"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Industry">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="A0000"/>
+            <xs:enumeration value="B0000"/>
+            <xs:enumeration value="C0000"/>
+            <xs:enumeration value="D0000"/>
+            <xs:enumeration value="E0000"/>
+            <xs:enumeration value="F0000"/>
+            <xs:enumeration value="G0000"/>
+            <xs:enumeration value="H0000"/>
+            <xs:enumeration value="I0000"/>
+            <xs:enumeration value="J0000"/>
+            <xs:enumeration value="K0000"/>
+            <xs:enumeration value="L0000"/>
+            <xs:enumeration value="M0000"/>
+            <xs:enumeration value="N0000"/>
+            <xs:enumeration value="O0000"/>
+            <xs:enumeration value="P0000"/>
+            <xs:enumeration value="Q0000"/>
+            <xs:enumeration value="R0000"/>
+            <xs:enumeration value="S0000"/>
+            <xs:enumeration value="T0000"/>
+            <xs:enumeration value="U0000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CorpScale">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SC00"/>
+            <xs:enumeration value="SC01"/>
+            <xs:enumeration value="SC02"/>
+            <xs:enumeration value="SC03"/>
+            <xs:enumeration value="SC04"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AcctTp">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AT01"/>
+            <xs:enumeration value="AT02"/>
+            <xs:enumeration value="AT03"/>
+            <xs:enumeration value="AT04"/>
+            <xs:enumeration value="AT05"/>
+            <xs:enumeration value="AT06"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="YON">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CustQryTp">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CT01"/>
+            <xs:enumeration value="CT02"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DistTp">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DT01"/>
+            <xs:enumeration value="DT02"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max150Text">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="150"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max500Text">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="500"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max32AlphaNumericSymbolText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="32"/>
+            <xs:pattern value="[a-zA-Z0-9\-]{1,32}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MaxMin18AlphaNumericSymbolText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="18"/>
+            <xs:maxLength value="18"/>
+            <xs:pattern value="[a-zA-Z0-9\-]{1,18}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max32AlphaNumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="32"/>
+            <xs:pattern value="[a-zA-Z0-9]{1,32}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MaxMin6NumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="6"/>
+            <xs:maxLength value="6"/>
+            <xs:pattern value="[0-9]{1,6}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max60Text">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="60"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MaxMin9NumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="9"/>
+            <xs:maxLength value="9"/>
+            <xs:pattern value="[0-9]{1,9}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max35NumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+            <xs:pattern value="[0-9]{1,35}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ISODateTime">
+        <xs:restriction base="xs:dateTime"/>
+    </xs:simpleType>
+    <xs:simpleType name="Signature">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="2000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ISODate">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:simpleType name="MaxMin8NumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="8"/>
+            <xs:maxLength value="8"/>
+            <xs:pattern value="[0-9]{1,8}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max1000Text">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="1000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MaxMin9AlphaNumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="9"/>
+            <xs:maxLength value="9"/>
+            <xs:pattern value="[a-zA-Z0-9]{1,9}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max256Text">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="256"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max8NumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="8"/>
+            <xs:pattern value="[0-9]{1,8}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max20Text">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="20"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MaxMin12NumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="12"/>
+            <xs:maxLength value="12"/>
+            <xs:pattern value="[0-9]{12}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max32Text">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="32"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max75Text">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="75"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MaxMin32AlphaNumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="32"/>
+            <xs:maxLength value="32"/>
+            <xs:pattern value="[a-zA-Z0-9]{32}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+
+
+    <xs:element name="MsgId">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Id" type="Max35NumericText"/>
+                <xs:element name="CreDtTm" type="ISODateTime"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="OrgnlMsgId">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Id" type="Max35NumericText"/>
+                <xs:element name="CreDtTm" type="ISODateTime"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="BizCtrlInf">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="PrcCd" type="MaxMin9AlphaNumericText"/>
+                <xs:element name="PrcMsg" type="Max256Text" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="PrtPtInfs">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Name" type="Max60Text"/>
+                <xs:element name="SocCode" type="MaxMin18AlphaNumericSymbolText" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CorpAcctInfs">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Qty" type="Max8NumericText"/>
+                <xs:element ref="CorpAcctInf" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AcctAgentInf">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="AcctAgentName" type="Max20Text"/>
+                <xs:element name="AcctAgentPhone" type="Max20Text"/>
+                <xs:element name="AcctAgentCertiNum" type="Max20Text"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CorpAcctInf">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="AcctNm" type="Max150Text"/>
+                <xs:element name="Acct" type="Max32AlphaNumericText"/>
+                <xs:element name="AcctSvcr" type="MaxMin12NumericText"/>
+                <xs:element name="AutoClsFlag" type="YON" minOccurs="0"/>
+                <xs:element name="AcctType" type="AcctTp" minOccurs="0"/>
+                <xs:element name="AcctFctvDt" type="ISODate" minOccurs="0"/>
+                <xs:element name="AcctDueDt" type="ISODate" minOccurs="0"/>
+                <xs:element name="RegRcdDt" type="ISODate"/>
+                <xs:element ref="AcctAgentInf" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ExtInfs">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ExtInf" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ExtInf" >
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Name" type="Max150Text"/>
+                <xs:element name="Value" type="Max500Text"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CorpAttr" >
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Name" type="Max60Text"/>
+                <xs:element name="SocCode" type="MaxMin18AlphaNumericSymbolText"/>
+                <xs:element name="LccCode" type="Max32Text" minOccurs="0"/>
+                <xs:element name="LeiCode" type="Max32Text" minOccurs="0"/>
+                <xs:element name="Email" type="Max75Text"/>
+                <xs:element name="ResiAddr" type="Max150Text"/>
+                <xs:element name="MainBusiAddr" type="Max150Text"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CorpProp" >
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="CorpScale" type="CorpScale"/>
+                <xs:element name="IndCls" type="Industry"/>
+                <xs:element name="DrAcg" type="YON" />
+                <xs:element name="IsGr" type="YON" />
+                <xs:element name="CorpTp" type="CorpTp"/>
+                <xs:element name="IsTech" type="YON"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CorpCdtRatgsInf" >
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="CdtRatgs" type="CreditRatings"/>
+                <xs:element name="RatgSub" type="Max60Text"/>
+                <xs:element name="RatgDueDt" type="ISODate" />
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PsnInf" >
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Name" type="Max20Text"/>
+                <xs:element name="DocTp" type="DocTp"/>
+                <xs:element name="DocNb" type="Max20Text" />
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AttInfCol" >
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="AttInf" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AttInf" >
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="AttType" type="AttTypeCode"/>
+                <xs:element name="AttBtNo" type="MaxMin32AlphaNumericText"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CorpBasicInfs">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="CorpAttr" />
+                <xs:element ref="CorpProp" />
+                <xs:element ref="CorpCdtRatgsInf" minOccurs="0"/>
+                <xs:element ref="PsnInf" />
+                <xs:element ref="AttInfCol" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="RspnrInf">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="CorpAcctInfs"  minOccurs="0"/>
+                <xs:element ref="CorpBasicInfs"  minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="MainBody">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="MsgId"/>
+                <xs:element ref="OrgnlMsgId"/>
+                <xs:element ref="BizCtrlInf"/> <!-- 处理结果信息 20220303修改 -->
+                <xs:element ref="PrtPtInfs" minOccurs="0"/>
+                <xs:element name="QryType" type="CustQryTp" minOccurs="0"/>
+                <xs:element ref="RspnrInf"  minOccurs="0" />
+                <xs:element ref="ExtInfs" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Document">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="MainBody"/>
+                <xs:element name="CdesSgntr" type="Signature"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

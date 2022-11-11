@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CommercialDraft352"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+ 
+    <!--报文体-->	
+	<xs:element name="CommercialDraft352">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId" />
+				<xs:element name="TtlNb" type="Max8NumericText"/>
+				<xs:element ref="BnkCdAndAccssPtInf" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+    <!--报文标识-->	        
+	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+ 
+	<!--参与者信息 -->	
+	<xs:element name="BnkCdAndAccssPtInf">
+	    <xs:complexType >
+			<xs:sequence>
+				<xs:element name="FctvDt" type="ISODate"  />
+				<xs:element name="BnkCd" type="MaxMin12NumericText" />
+				<xs:element name="AccssPtCd" type="MaxMin10NumericText"/>
+				<xs:element name="Rmrk" type="Max200Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+ 
+ 
+    <xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+ 
+    <xs:simpleType name="Max8NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+			<xs:pattern value="[0-9]{1,8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+    <xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+
+
+    <xs:simpleType name="Max200Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+   <xs:simpleType name="MaxMin12NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="12"/>
+			<xs:maxLength value="12"/>
+			<xs:pattern value="[0-9]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+    <xs:simpleType name="MaxMin10NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="10"/>
+			<xs:maxLength value="10"/>
+			<xs:pattern value="[0-9]{10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	 
+</xs:schema>

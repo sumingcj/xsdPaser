@@ -1,0 +1,1200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MainBody"/>
+				<xs:element name="CdesSgntr" type="Signature"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MainBody">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="ReqInf"/>
+				<xs:element ref="ComrclDrft" minOccurs="0"/>
+				<xs:element ref="DwrInf" minOccurs="0"/>
+				<xs:element ref="AcptPsnInf" minOccurs="0"/>
+				<xs:element ref="PyeeInf" minOccurs="0"/>
+				<xs:element ref="RlvBnkInf" minOccurs="0"/>
+				<xs:element ref="HistoryInf" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ReqInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ReqMsgInf" type="ReqMsgInformation"/>
+				<xs:element name="AutoSend" type="YON"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- modify by kfzx-chenl1 20180314 case 非交易过户、提前和逾期赎回  -->
+	<xs:complexType name="ReqMsgInformation">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="NCP013"/>
+				<xs:element ref="NCP015"/>
+				<xs:element ref="NCP016"/>
+				<xs:element ref="CPR002"/>
+				<xs:element ref="CPR003"/>
+				<xs:element ref="CPR004"/>
+				<xs:element ref="CPR005"/>
+				<xs:element ref="CPR015"/>
+				<xs:element ref="CPR016"/>
+				<xs:element ref="CBS016"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="NCP013">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="CdInf"/>
+				<xs:element ref="MvInfElmt"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MvInfElmt">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MvTp"/>
+				<xs:element name="MvOutDt" type="ISODate"/>
+				<xs:element name="MvOutBrId" type="MaxMin9NumericText"/>
+				<xs:element name="MvInBrId" type="MaxMin9NumericText"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MvTp">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="VT01"/>
+				<xs:enumeration value="VT02"/>
+				<xs:enumeration value="VT03"/>
+				<xs:enumeration value="VT04"/>
+				<xs:enumeration value="VT05"/>
+				<xs:enumeration value="VT06"/>
+				<xs:enumeration value="VT07"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="NCP015">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="CdInf"/>
+				<xs:element name="AddGuaInf" type="AddGuaInf1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CPR015">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="CdInf"/>
+				<xs:element ref="XfeInf"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CPR016">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element name="RqInf" type="RqInf1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CBS016">
+		<xs:complexType>
+			<xs:sequence>
+				<!-- modified by kfcs-gyl-hongjudong  CBS016 MsgId规则不同  2020-09-16  2010_A -->
+				<xs:element name="MsgId">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Id" type="Max35AlphaNumericText" />
+							<xs:element name="CreDtTm" type="ISODateTime" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="CdInf">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="BpNo" type="MaxMin30NumericText" />
+							<xs:element name="CdRange" type="Max25Text" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DsctInf">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="DsctRange" type="Max25Text" />
+							<xs:element name="DsctAmt" type="CurrencyAndAmount" />
+							<xs:element name="DsctType" type="RepurchasedMarkCode" />
+							<xs:element name="DsctRgtDt" type="ISODate" />
+							<xs:element name="DsctRt" type="PercentageRate"  />
+							<xs:element name="DsctOptAmt" type="CurrencyAndAmount"  />
+							<xs:element name="BnedMtmrk" type="BanEndorsementMarkCode" />
+							<xs:element name="ClrTp" type="SettlementMarkCode" />
+							<xs:element name="DsctBBDt" type="ISODate" minOccurs="0" maxOccurs="1"/>
+							<xs:element name="DsctBBRate" type="PercentageRate"  minOccurs="0"  maxOccurs="1"/>
+							<xs:element name="DsctBBAmt" type="CurrencyAndAmount"  minOccurs="0"  maxOccurs="1"/>
+							<xs:element name="TrdCtNo"  type="Max500NumericText"  minOccurs="0"  maxOccurs="1"/>
+							<xs:element name="InvInf" minOccurs="0"  maxOccurs="300" type="InvInfInfo" />
+							<xs:element name="Note"  type="Max256Text" minOccurs="0"  maxOccurs="1"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="DsctApplyInf" />
+				<xs:element ref="DsctBranchInf" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="InvInfInfo">
+		<xs:sequence>
+			<xs:element name="InvNum"  type="Max100NumericText" minOccurs="0"/>
+			<xs:element name="InCode"  type="Max100NumericText" minOccurs="0" />
+			<xs:element name="InoDt"  type="ISODate" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="InoAmt" type="CurrencyAndAmount" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="BtNo" type="Max100NumericText" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DsctApplyInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name"  type="Max60Text"/>
+				<xs:element name="EnterNo" type="MaxMin9AlphaNumericText" />
+				<xs:element name="Code"  type="MaxMin6AlphaNumericText"/>
+				<xs:element name="SocCode" type="MaxMin18AlphaNumericSymbolText" />
+				<xs:element name="Acct" type="Max32AlphaNumericText" />
+				<xs:element name="AcctSvcr" type="MaxMin12NumericText" />
+				<xs:element name="Eres" type="Max2000Text" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DsctBranchInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max60Text" />
+				<xs:element name="Acct" type="Max32AlphaNumericText" />
+				<xs:element name="AcctSvcr" type="MaxMin12NumericText" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="RqInf1">
+			<xs:sequence>
+				<xs:element name="Dt" type="ISODate"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RvBrId" type="MaxMin9NumericText"/>
+				<xs:element name="DealId" type="Max20AlphaNumericText"/>
+				<xs:element ref="BBTp"/>
+				<xs:element ref="BBRsnCode" minOccurs="0"/>
+				<xs:element name="RqDealOpi" type="Max150Text"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddGuaInf1">
+		<xs:sequence>
+			<xs:element name="AddAppDt" type="ISODate"/>
+			<xs:element name="AddAppBrId" type="MaxMin9NumericText"/>
+			<xs:element name="MvOutBrId" type="MaxMin9NumericText"/>
+			<xs:element name="AddGrntBrId" type="MaxMin9NumericText"/>
+			<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- modified 2018-04-08 K20180157 kfzx-hujian 程序交接问题修改：修改赎回类别和赎回事由代码对应的XSD校验值  -->
+	<!-- modified 2018-07-18 1808A kfzx-wangsh1 赎回类别BBT03  -->
+	<xs:element name="BBTp">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="BBT01"/>
+				<xs:enumeration value="BBT02"/>
+				<xs:enumeration value="BBT03"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="BBRsnCode">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="BBR01"/>
+				<xs:enumeration value="BBR02"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:simpleType name="Max20AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,20}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="NCP016">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="CdInf"/>
+				<xs:element ref="RqInf"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RqInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CfmAppDt" type="ISODate"/>
+				<xs:element name="CfmAppBrId" type="MaxMin9NumericText"/>
+				<xs:element ref="CfmTp"/>
+				<xs:element ref="CfmAddTp"/>
+				<xs:element ref="ImgInfs" minOccurs="0"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CfmTp">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="VM01"/>
+				<xs:enumeration value="VM02"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="CfmAddTp">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="VN01"/>
+				<xs:enumeration value="VN02"/>
+				<xs:enumeration value="VN03"/>
+				<xs:enumeration value="VN04"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="CPR005">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="CdInf"/>
+				<xs:element name="PstInf" type="PstInf1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="PstInf1">
+		<xs:sequence>
+			<xs:element name="RqDt" type="ISODate"/>
+			<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+			<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CPR004">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="CdInf"/>
+				<xs:element ref="PlgRlvInf"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PlgRlvInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RqDt" type="ISODate"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CPR003">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="CdInf"/>
+				<xs:element ref="PlgInf"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PlgInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RqDt" type="ISODate"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RvBrId" type="MaxMin9NumericText"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CPR002">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="CdInf"/>
+				<xs:element ref="GrntInf"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CdInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CdNo" type="Max30NumericText"/>
+				<xs:element name="CdAmt" type="CurrencyAndAmount"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GrntInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RqDt" type="ISODate"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RvBrId" type="MaxMin9NumericText"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ComrclDrft">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CdType" type="DraftTypeCode"/>
+				<xs:element name="CdNo" type="Max30NumericText"/>
+				<xs:element name="CdAmt" type="CurrencyAndAmount"/>
+				<xs:element name="IssDt" type="ISODate"/>
+				<xs:element name="DueDt" type="ISODate"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DwrInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max60Text"/>
+				<xs:element name="Acct" type="Max32AlphaNumericText"/>
+				<xs:element name="AcctSvcr" type="MaxMin12NumericText" minOccurs="0"/>
+				<xs:element name="SocCode" type="MaxMin18AlphaNumericSymbolText"/>
+				<xs:element name="IndCls" type="Industry" minOccurs="0"/>
+				<xs:element name="CorpScale" type="CorpScale" minOccurs="0"/>
+				<xs:element name="DrAcg" type="YON" minOccurs="0"/>
+				<xs:element name="Area" type="Province" minOccurs="0"/>
+				<xs:element name="IsGr" type="YON" minOccurs="0"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!--mod by kfzx-wangsh1 20181207 1903版本 承兑人开户行号、收款人开户银行名称、解付行名称从[1..1]改为[0..1]-->
+	<xs:element name="AcptPsnInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max60Text"/>
+				<xs:element name="Acct" type="Max32AlphaNumericText"/>
+				<xs:element name="AcctSvcr" type="MaxMin12NumericText" minOccurs="0"/>
+				<xs:element name="SocCode" type="MaxMin18AlphaNumericSymbolText" minOccurs="0"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PyeeInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max60Text"/>
+				<xs:element name="Acct" type="Max32AlphaNumericText"/>
+				<xs:element name="AcctSvcr" type="MaxMin12NumericText" minOccurs="0"/>
+				<xs:element name="SocCode" type="MaxMin18AlphaNumericSymbolText" minOccurs="0"/>
+				<xs:element name="AcctBkName" type="Max60Text" minOccurs="0"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RlvBnkInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AcctSvcr" type="MaxMin12NumericText" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="HistoryInf">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="AcptInf"/>
+				<xs:element ref="AddGuaInf"/>
+				<xs:element ref="AfDCollztn"/>
+				<xs:element ref="RlvStpPayInf"/>
+				<xs:element ref="AsfDGuarntee"/>
+				<xs:element ref="BfDCollztn"/>
+				<xs:element ref="BfDGuarntee"/>
+				<xs:element ref="BfDsEndrsmt"/>
+				<xs:element ref="CfmInf"/>
+				<xs:element ref="DsctInf"/>
+				<xs:element ref="Guarntee"/>
+				<xs:element ref="MvInf"/>
+				<xs:element ref="PstInf"/>
+				<xs:element ref="RegInf"/>
+				<xs:element ref="StpRgtInf"/>
+				<xs:element ref="DealInf1011"/>
+				<xs:element ref="DealInf1021"/>
+				<xs:element ref="DealInf1031"/>
+				<xs:element ref="DealInf1032"/>
+				<xs:element ref="DealInf3021"/>
+				<xs:element ref="DealInf3011"/>
+				<xs:element ref="XfeInf"/>
+				<xs:element ref="ECDSInf"/>
+				<xs:element ref="DepEndrsmt"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<!-- add by kfzx-fup 2020-09-10 2010_A 增加转让背书（存托）信息标签 -->
+	<!-- modified by zhangjie 2020-12-14 2012_A 修改原因：增加非必输校验属性 -->
+	<xs:element name="DepEndrsmt">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="BedDt" type="ISODate"/>
+				<xs:element name="BedName" type="Max60Text" minOccurs="0"/>
+				<xs:element name="BedAcctNo" type="Max32AlphaNumericText" minOccurs="0"/>
+				<xs:element name="BedSocCode" type="MaxMin18AlphaNumericSymbolText" minOccurs="0"/>
+				<xs:element name="BedEnterNo" type="MaxMin9AlphaNumericText" minOccurs="0"/>
+				<xs:element name="BedBrId" type="MaxMin9NumericText"/>
+				<xs:element name="BBedBrId" type="MaxMin9NumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- add by kfzx-fup 2018-02-28 1808_A 增加电票转入标签 -->
+	<xs:element name="ECDSInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RegDt" type="ISODate"/>
+				<xs:element name="HldrBrId" type="MaxMin9NumericText"/>
+				<xs:element name="OwnBrId" type="MaxMin9NumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AcptInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AcptDt" type="ISODate"/>
+				<xs:element ref="ImgInfs" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImgInfs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ImgInf" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImgInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ImgType" type="ImgType"/>
+				<xs:element name="ImgBtNo" type="MaxMin32AlphaNumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddGuaInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Dt" type="ISODate"/>
+				<xs:element name="AddGrntBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RqNote" type="Max150Text" minOccurs="0"/>
+				<xs:element name="RvNote" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AfDCollztn">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PlgDt" type="ISODate"/>
+				<xs:element name="RevDt" type="ISODate" minOccurs="0"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RvBrId" type="MaxMin9NumericText"/>
+				<xs:element name="PlgRqNote" type="Max150Text" minOccurs="0"/>
+				<xs:element name="PlgRvNote" type="Max150Text" minOccurs="0"/>
+				<xs:element name="RevRqNote" type="Max150Text" minOccurs="0"/>
+				<xs:element name="RevRvNote" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RlvStpPayInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RegDt" type="ISODate"/>
+				<xs:element name="RlvStpPayDt" type="ISODate"/>
+				<xs:element name="RlvStpPayRsn" type="Max150Text"/>
+				<xs:element name="RlvStpPayType" type="RlvType"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+				<xs:element ref="ImgInfs" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AsfDGuarntee">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="GrntDt" type="ISODate"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RvBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RqNote" type="Max150Text" minOccurs="0"/>
+				<xs:element name="RvNote" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BfDCollztn">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PlgDt" type="ISODate"/>
+				<xs:element name="PlgRlvDt" type="ISODate"/>
+				<xs:element name="PlgeName" type="Max60Text"/>
+				<xs:element name="PlgeAcctNo" type="Max32AlphaNumericText"/>
+				<xs:element name="PlgeDepBnk" type="MaxMin12NumericText"/>
+				<xs:element name="PlgeSocCode" type="MaxMin18AlphaNumericSymbolText" minOccurs="0"/>
+				<xs:element name="PlgeNote1" type="Max150Text" minOccurs="0"/>
+				<xs:element name="PlgeNote2" type="Max150Text" minOccurs="0"/>
+				<xs:element name="PleeName" type="Max60Text"/>
+				<xs:element name="PleeAcctNo" type="Max32AlphaNumericText"/>
+				<xs:element name="PleeDepBnk" type="MaxMin12NumericText"/>
+				<xs:element name="PleeSocCode" type="MaxMin18AlphaNumericSymbolText" minOccurs="0"/>
+				<xs:element name="PleeNote1" type="Max150Text" minOccurs="0"/>
+				<xs:element name="PleeNote2" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BfDGuarntee">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="GrntDt" type="ISODate"/>
+				<xs:element name="WrntName" type="Max60Text"/>
+				<xs:element name="WrntAcctNo" type="Max32AlphaNumericText"/>
+				<xs:element name="WrntDepBnk" type="MaxMin12NumericText"/>
+				<xs:element name="WrntSocCode" type="MaxMin18AlphaNumericSymbolText"/>
+				<xs:element name="WrntNote" type="Max150Text" minOccurs="0"/>
+				<xs:element name="GrntName" type="Max60Text"/>
+				<xs:element name="GrntAcctNo" type="Max32AlphaNumericText"/>
+				<xs:element name="GrntPsnSvcr" type="MaxMin12NumericText"/>
+				<xs:element name="GrntSocCode" type="MaxMin18AlphaNumericSymbolText"/>
+				<xs:element name="GrntAdr" type="Max60Text"/>
+				<xs:element name="GrntNote" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BfDsEndrsmt">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="BedDt" type="ISODate"/>
+				<xs:element name="BedName" type="Max60Text"/>
+				<xs:element name="BedAcctNo" type="Max32AlphaNumericText"/>
+				<xs:element name="BedDepBnk" type="MaxMin12NumericText"/>
+				<xs:element name="BedSocCode" type="MaxMin18AlphaNumericSymbolText"/>
+				<xs:element name="BedNote1" type="Max150Text" minOccurs="0"/>
+				<xs:element name="BBedName" type="Max60Text"/>
+				<xs:element name="BBedAcctNo" type="Max32AlphaNumericText"/>
+				<xs:element name="BBedDepBnk" type="MaxMin12NumericText"/>
+				<xs:element name="BBedSocCode" type="MaxMin18AlphaNumericSymbolText"/>
+				<xs:element name="BBedNote1" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CfmInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CfmDt" type="ISODate"/>
+				<xs:element name="CfmTp" type="Verfy"/>
+				<xs:element name="SgnUpMk" type="SignUpMarkCode"/>
+				<xs:element ref="CfmRefCode" minOccurs="0"/>
+				<xs:element name="RqNote" type="Max150Text" minOccurs="0"/>
+				<xs:element name="RvNote" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="SignUpMarkCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SU00"/>
+			<xs:enumeration value="SU01"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CfmRefCode">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="RR02"/>
+				<xs:enumeration value="RR03"/>
+				<xs:enumeration value="RR05"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DsctInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DsctDt" type="ISODate"/>
+				<xs:element name="OName" type="Max60Text"/>
+				<xs:element name="OAcctNo" type="Max32AlphaNumericText"/>
+				<xs:element name="OBnkCode" type="MaxMin12NumericText"/>
+				<xs:element name="OSocCode" type="MaxMin18AlphaNumericSymbolText"/>
+				<xs:element name="OIdsr" type="Industry" minOccurs="0"/>
+				<xs:element name="OCpSe" type="CorpScale" minOccurs="0"/>
+				<xs:element name="ODrAcg" type="YON" minOccurs="0"/>
+				<xs:element name="Area" type="Province" minOccurs="0"/>
+				<xs:element name="OIsGreen" type="YON" minOccurs="0"/>
+				<xs:element name="ONote" type="Max150Text" minOccurs="0"/>
+				<xs:element name="IName" type="Max60Text"/>
+				<xs:element name="IAcctNo" type="Max32AlphaNumericText"/>
+				<xs:element name="IBnkCode" type="MaxMin12NumericText" minOccurs="0"/>
+				<xs:element name="IBnkId" type="MaxMin9NumericText"/>
+				<xs:element name="ISocCode" type="MaxMin18AlphaNumericSymbolText" minOccurs="0"/>
+				<xs:element name="INote" type="Max150Text" minOccurs="0"/>
+				<xs:element ref="ImgInfs" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Guarntee">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="GrntDt" type="ISODate"/>
+				<xs:element name="WrntName" type="Max60Text"/>
+				<xs:element name="WrntAcctNo" type="Max32AlphaNumericText" minOccurs="0"/>
+				<xs:element name="WrntDepBnk" type="MaxMin12NumericText" minOccurs="0"/>
+				<xs:element name="WrntSocCode" type="MaxMin18AlphaNumericSymbolText" minOccurs="0"/>
+				<xs:element name="WrntNote" type="Max150Text" minOccurs="0"/>
+				<xs:element name="GrntName" type="Max60Text"/>
+				<xs:element name="GrntAcctNo" type="Max32AlphaNumericText"/>
+				<xs:element name="GrntPsnSvcr" type="MaxMin12NumericText"/>
+				<xs:element name="GrntSocCode" type="MaxMin18AlphaNumericSymbolText" minOccurs="0"/>
+				<xs:element name="GrntAdr" type="Max60Text" minOccurs="0"/>
+				<xs:element name="GrntNote" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MvInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MvOutDt" type="ISODate"/>
+				<xs:element name="MvInDt" type="ISODate"/>
+				<xs:element name="MvOutBrId" type="MaxMin9NumericText"/>
+				<xs:element name="MvInBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RqNote" type="Max150Text" minOccurs="0"/>
+				<xs:element name="RvNote" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PstInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RqDt" type="ISODate"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="Result" type="SignUpMarkCode"/>
+				<xs:element name="PstRefCode" type="DishonorCode" minOccurs="0"/>
+				<xs:element name="StlRst" type="StlResult" minOccurs="0"/>
+				<xs:element name="RqNote" type="Max150Text" minOccurs="0"/>
+				<xs:element name="RvNote" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RegInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RegDt" type="ISODate"/>
+				<xs:element name="RgtBrId" type="MaxMin9NumericText"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="StpRgtInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RegDt" type="ISODate"/>
+				<xs:element name="StpDt" type="ISODate"/>
+				<xs:element name="StpType" type="StpType"/>
+				<xs:element name="StpRsn" type="Max150Text"/>
+				<xs:element name="Name" type="Max60Text" minOccurs="0"/>
+				<xs:element name="Acct" type="Max32AlphaNumericText" minOccurs="0"/>
+				<xs:element name="BnkCode" type="MaxMin12NumericText" minOccurs="0"/>
+				<xs:element name="SocCode" type="MaxMin18AlphaNumericSymbolText" minOccurs="0"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+				<xs:element ref="ImgInfs" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DealInf1011">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Dt" type="ISODate"/>
+				<xs:element name="DealTp" type="BusiType"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RvBrId" type="MaxMin9NumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DealInf1021">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Dt" type="ISODate"/>
+				<xs:element name="DealTp" type="BusiType"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RvBrId" type="MaxMin9NumericText"/>
+				<xs:element name="BBDt" type="ISODate" minOccurs="0"/>
+				<xs:element name="BBStu" type="BuyBackStu" minOccurs="0"/>
+				<xs:element name="ChgStu" type="ExchgStu" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DealInf1031">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Dt" type="ISODate"/>
+				<xs:element name="DealTp" type="BusiType"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RvBrId" type="MaxMin9NumericText"/>
+				<xs:element name="BBDt" type="ISODate" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DealInf1032">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Dt" type="ISODate"/>
+				<xs:element name="DealTp" type="BusiType"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RvBrId" type="MaxMin9NumericText"/>
+				<xs:element name="BBDt" type="ISODate" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DealInf3021">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Dt" type="ISODate"/>
+				<xs:element name="DealTp" type="BusiType"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RvBrId" type="MaxMin9NumericText"/>
+				<xs:element name="BBDt" type="ISODate" minOccurs="0"/>
+				<xs:element name="BBStu" type="BuyBackStu" minOccurs="0"/>
+				<xs:element name="ChgStu" type="ExchgStu" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DealInf3011">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Dt" type="ISODate"/>
+				<xs:element name="DealTp" type="BusiType"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RvBrId" type="MaxMin9NumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!--modified by kfzx-wangqf 20180727 1808版本 需求变更修改非交易过户影像为必输-->
+	<xs:element name="XfeInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Dt" type="ISODate"/>
+				<xs:element name="RqBrId" type="MaxMin9NumericText"/>
+				<xs:element name="RvBrId" type="MaxMin9NumericText"/>
+				<xs:element name="TrsRes" type="Max150Text"/>
+				<xs:element ref="ImgInfs"/>
+				<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="MaxMin30NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="30" />
+			<xs:maxLength value="30" />
+			<xs:pattern value="[0-9]{30}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- modified by kfcs-gyl-hongjudong  CBS016 MsgId规则不同  2020-09-16  2010_A -->
+	<xs:simpleType name="Max35AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="35" />
+			<xs:pattern value="[a-zA-Z0-9]{1,35}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max100NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="100"/>
+			<xs:pattern value="[0-9]{1,100}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max500NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="500" />
+			<xs:pattern value="[0-9]{1,500}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SettlementMarkCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CR01"/>
+			<xs:enumeration value="CR02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BanEndorsementMarkCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EM00"/>
+			<xs:enumeration value="EM01"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PercentageRate">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(0\.\d{1,6})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin9AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max25Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0" />
+			<xs:maxLength value="25" />
+			<xs:pattern value="|0|[0-9]{12},[0-9]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max2000Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RepurchasedMarkCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BT01"/>
+			<xs:enumeration value="BT02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max30NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+			<xs:pattern value="[0-9]{1,30}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="4"/>
+			<xs:pattern value="[0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurrencyAndAmount_SimpleType">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="(\d{1,16})|(\d{1,16}\.\d{1,2})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CurrencyAndAmount">
+		<xs:simpleContent>
+			<xs:extension base="CurrencyAndAmount_SimpleType">
+				<xs:attribute name="Ccy" type="CurrencyCode" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="Max150Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="150"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max60Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin6AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="6"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max32AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin12NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="12"/>
+			<xs:maxLength value="12"/>
+			<xs:pattern value="[0-9]{1,12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin18AlphaNumericSymbolText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="18"/>
+			<xs:maxLength value="18"/>
+			<xs:pattern value="[a-zA-Z0-9\-]{1,18}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin9NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[0-9]{1,9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Industry">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A0000"/>
+			<xs:enumeration value="B0000"/>
+			<xs:enumeration value="C0000"/>
+			<xs:enumeration value="D0000"/>
+			<xs:enumeration value="E0000"/>
+			<xs:enumeration value="F0000"/>
+			<xs:enumeration value="G0000"/>
+			<xs:enumeration value="H0000"/>
+			<xs:enumeration value="I0000"/>
+			<xs:enumeration value="J0000"/>
+			<xs:enumeration value="K0000"/>
+			<xs:enumeration value="L0000"/>
+			<xs:enumeration value="M0000"/>
+			<xs:enumeration value="N0000"/>
+			<xs:enumeration value="O0000"/>
+			<xs:enumeration value="P0000"/>
+			<xs:enumeration value="Q0000"/>
+			<xs:enumeration value="R0000"/>
+			<xs:enumeration value="S0000"/>
+			<xs:enumeration value="T0000"/>
+			<xs:enumeration value="U0000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CorpScale">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SC00"/>
+			<xs:enumeration value="SC01"/>
+			<xs:enumeration value="SC02"/>
+			<xs:enumeration value="SC03"/>
+			<xs:enumeration value="SC04"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="YON">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Province">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="11"/>
+			<xs:enumeration value="12"/>
+			<xs:enumeration value="31"/>
+			<xs:enumeration value="50"/>
+			<xs:enumeration value="13"/>
+			<xs:enumeration value="14"/>
+			<xs:enumeration value="21"/>
+			<xs:enumeration value="22"/>
+			<xs:enumeration value="23"/>
+			<xs:enumeration value="32"/>
+			<xs:enumeration value="33"/>
+			<xs:enumeration value="34"/>
+			<xs:enumeration value="35"/>
+			<xs:enumeration value="36"/>
+			<xs:enumeration value="37"/>
+			<xs:enumeration value="41"/>
+			<xs:enumeration value="42"/>
+			<xs:enumeration value="43"/>
+			<xs:enumeration value="44"/>
+			<xs:enumeration value="45"/>
+			<xs:enumeration value="46"/>
+			<xs:enumeration value="51"/>
+			<xs:enumeration value="52"/>
+			<xs:enumeration value="53"/>
+			<xs:enumeration value="61"/>
+			<xs:enumeration value="62"/>
+			<xs:enumeration value="63"/>
+			<xs:enumeration value="15"/>
+			<xs:enumeration value="54"/>
+			<xs:enumeration value="64"/>
+			<xs:enumeration value="65"/>
+			<xs:enumeration value="81"/>
+			<xs:enumeration value="82"/>
+			<xs:enumeration value="71"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImgType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="IM01"/>
+			<xs:enumeration value="IM03"/>
+			<xs:enumeration value="IM04"/>
+			<xs:enumeration value="IM05"/>
+			<xs:enumeration value="IM06"/>
+			<xs:enumeration value="IM07"/>
+			<xs:enumeration value="IM08"/>
+			<xs:enumeration value="IM09"/>
+			<xs:enumeration value="IM10"/>
+			<xs:enumeration value="IM11"/>
+			<xs:enumeration value="IM12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RlvType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RT01"/>
+			<xs:enumeration value="RT02"/>
+			<xs:enumeration value="RT03"/>
+			<xs:enumeration value="RT05"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Verfy">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VM01"/>
+			<xs:enumeration value="VM02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CfmStu">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CS01"/>
+			<xs:enumeration value="CS02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StlResult">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="R20"/>
+			<xs:enumeration value="R21"/>
+			<xs:enumeration value="R23"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StpType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ST01"/>
+			<xs:enumeration value="ST02"/>
+			<xs:enumeration value="ST03"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BusiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BT01"/>
+			<xs:enumeration value="BT02"/>
+			<xs:enumeration value="BT03"/>
+			<xs:enumeration value="RBT01"/>
+			<xs:enumeration value="RBT02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BuyBackStu">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BBS01"/>
+			<xs:enumeration value="BBS02"/>
+			<xs:enumeration value="BBS03"/>
+			<xs:enumeration value="BBS04"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ExchgStu">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ES01"/>
+			<xs:enumeration value="ES02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DishonorCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CP01"/>
+			<xs:enumeration value="CP02"/>
+			<xs:enumeration value="CP03"/>
+			<xs:enumeration value="CP04"/>
+			<xs:enumeration value="CP05"/>
+			<xs:enumeration value="CP06"/>
+			<xs:enumeration value="CP07"/>
+			<xs:enumeration value="CP08"/>
+			<xs:enumeration value="CP09"/>
+			<xs:enumeration value="CP10"/>
+			<xs:enumeration value="CP11"/>
+			<xs:enumeration value="CP12"/>
+			<xs:enumeration value="CP13"/>
+			<xs:enumeration value="CP14"/>
+			<xs:enumeration value="CP15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max256Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DraftTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AC01"/>
+			<xs:enumeration value="AC02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AltrnTp">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AT01"/>
+			<xs:enumeration value="AT02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max90Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="90"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin18Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="18"/>
+			<xs:maxLength value="18"/>
+			<xs:pattern value="[_0-9]{1,18}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin32AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="32"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CorpClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CC00"/>
+			<xs:enumeration value="CC01"/>
+			<xs:enumeration value="CC02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BrStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ST01"/>
+			<xs:enumeration value="ST02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurrencyCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="CNY"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max20Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+			<xs:pattern value="[-0-9]{1,20}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max450Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="450"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Signature">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

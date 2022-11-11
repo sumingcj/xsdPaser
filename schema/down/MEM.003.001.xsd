@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MainBody" type="MainBody01"/>
+				<xs:element name="CdesSgntr" type="Signature"/>
+		<!--	<xs:element name="PtcptSgntr" type="Signature"/>-->
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="MainBody01">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageIdentification1"/>
+			<xs:element name="TrdrInfElmt" type="TraderDealerInformationElement1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageIdentification1">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35NumericText"/>
+			<xs:element name="CreDtTm" type="ISODateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TraderDealerInformationElement1">
+		<xs:sequence>
+			<xs:element name="AltrnTp" type="AltrnTp"/>
+			<xs:element name="AltrnTm" type="ISODateTime"/>
+			<xs:element name="MbrId" type="MaxMin6NumericText"/>
+			<xs:element name="BrId" type="MaxMin9NumericText"/>
+			<xs:element name="UsrId" type="Max10AlphaNumericText"/>
+			<xs:element name="UsrTp" type="UserType"/>
+			<xs:element name="UsrRole" type="UserRole"/>
+			<xs:element name="UsrNm" type="Max50Text"/>
+			<xs:element name="UsrSts" type="UserStatus"/>
+			<xs:element name="Addr" type="Max60Text" minOccurs="0"/>
+			<xs:element name="Tel" type="Max20Text" minOccurs="0"/>
+			<xs:element name="CelPubMk" type="YON" minOccurs="0"/>  <!-- modify by kfzx-wangcc1 1801 20170907 手机是否公开修改为非必输项 -->
+			<xs:element name="Cel" type="Max20Text" minOccurs="0"/>
+			<xs:element name="Personalized" type="Max300Text" minOccurs="0"/>
+			<xs:element name="Email" type="Max75Text" minOccurs="0"/><!-- modified by kfzx-ruanyx 修改原因:控制最多不能超过75个汉字或字符 -->
+			<xs:element name="Note1" type="Max150Text" minOccurs="0"/>
+			<xs:element name="Note2" type="Max150Text" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="AltrnTp">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AT01"/>
+			<xs:enumeration value="AT02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin6NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="6"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="[0-9]{1,6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin9NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[0-9]{1,9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max10AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UserType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="UT01"/>
+			<xs:enumeration value="UT02"/>
+			<xs:enumeration value="UT03"/>
+			<xs:enumeration value="UT04"/>
+<!-- 			<xs:enumeration value="UT05"/> modify by kfzx-wangcc1 1801 20170919 概述分册删除UT05-->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UserRole">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="UR01"/>
+			<xs:enumeration value="UR02"/><!-- modify by kfzx-wangcc1 1801 20170913 增加非交易员字典项 -->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max50Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UserStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="US01"/>
+			<xs:enumeration value="US02"/>
+			<xs:enumeration value="US03"/>
+			<xs:enumeration value="US04"/><!-- modify by kfzx-lijl1 1808 20180525 增加用户注销字典项 -->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max60Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max20Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+			<xs:pattern value="[-0-9]{1,20}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="YON">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max300Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="300"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max75Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="75"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max150Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="150"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Signature">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

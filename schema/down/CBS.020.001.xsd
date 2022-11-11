@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!-- 存托结果通知报文-平台侧(CBS.020.001) -->
+    <!--修改时间 2020-9-3 11:36:07 chenruolai-->
+    <xs:element name="Document">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="MainBody"/>
+				<xs:element name="CdesSgntr" type="Signature"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="MainBody">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="MsgId"/><!--报文标识-->
+                <xs:element ref="Dpstnf"/><!--存托信息-->
+                <xs:element name="PrdtSts" type="PrdStt"/><!--产品创设结果-->
+                <xs:element ref="DpstAplyInf" minOccurs="1" maxOccurs="unbounded"/><!--存托申请单信息-->
+                <xs:element ref="PrdtInf"/><!--标准化票据产品信息-->
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="MsgId">  <!--  报文标识-->
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Id" type="Max35AlphaNumericText"/><!--报文标识号-->
+                <xs:element name="CreDtTm" type="ISODateTime"/><!--报文时间-->
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Dpstnf">  <!--存托信息-->
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="DpstDt" type="ISODate"/><!--存托日期-->
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:simpleType name="PrdStt">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="PS01"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="DpstAplyInf">  <!--存托申请单信息-->
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ApplyId" type="Max20AlphaNumericText"/><!--存托申请单编号-->
+                <xs:element name="DpstNo" type="Max20AlphaNumericText"/><!--存托单编号-->
+                <xs:element name="CdAmt" type="CurrencyAndAmount"/><!--票据金额-->
+                <xs:element name="FinRt" type="PercentageRate"/><!--融资利率-->
+                <xs:element name="SetAmt" type="CurrencyAndAmount"/><!--结算金额-->
+                <xs:element name="SetDt" type="ISODate"/><!--结算日期-->
+                <xs:element name="SetMode" type="SettleType"/><!--结算方式-->
+                <xs:element ref="CdInf" minOccurs="1" maxOccurs="unbounded"/><!--票据信息-->
+                <xs:element ref="DpstReqMemInf" minOccurs="1" maxOccurs="unbounded"/><!--存托申请人信息-->
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CdInf">  <!--票据信息-->
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="BpNo" type="MaxMin30NumericText"/><!--票据包编号-->
+                <xs:element name="BpRange" type="Max25Text"/><!--子票包区间-->
+                <xs:element name="BpAmt" type="CurrencyAndAmount"/><!--票据包存托金额-->
+                <xs:element name="BpStd" type="CurrencyAndAmount"/><!--标准金额-->
+                <xs:element name="BpTerm" type="Max10NumericText"/><!--票据包剩余期限-->
+                <xs:element name="PayInt" type="CurrencyAndAmount"/><!--应付利息-->
+                <xs:element name="SetAmt" type="CurrencyAndAmount"/><!--结算金额-->
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DpstReqMemInf">  <!--存托申请人信息-->
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="SocCode" type="MaxMin18AlphaNumericText"/><!--存托申请人社会统一信用代码-->
+                <xs:element name="PlatCode" type="MaxMin6AlphaNumericText"/><!--存托申请人所在平台代码-->
+                <xs:element name="BhCode" type="MaxMin9AlphaNumericText"/><!--存托申请人开户行机构代码-->
+                <xs:element name="BnkCode" type="MaxMin12NumericText"/><!--存托申请人开户行行号-->
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PrdtInf">  <!--标准化票据产品信息-->
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="PrdtName" type="Max60Text"/><!--标准化票据产品名称-->
+                <xs:element name="PrdtNo" type="MaxMin9NumericText"/><!--标准化票据产品代码-->
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!--字段类型-->
+    <xs:simpleType name="MaxMin10NumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="10"/>
+            <xs:maxLength value="10"/>
+            <xs:pattern value="[0-9]{10}"/>
+        </xs:restriction>
+    </xs:simpleType>
+	<xs:simpleType name="MaxMin9NumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="9"/>
+            <xs:maxLength value="9"/>
+            <xs:pattern value="[0-9]{9}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max60Text">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="60"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MaxMin12NumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="12"/>
+            <xs:maxLength value="12"/>
+            <xs:pattern value="[0-9]{1,12}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MaxMin9AlphaNumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="9"/>
+            <xs:maxLength value="9"/>
+            <xs:pattern value="[a-zA-Z0-9]{9}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MaxMin6AlphaNumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="6"/>
+            <xs:maxLength value="6"/>
+            <xs:pattern value="[a-zA-Z0-9]{6}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MaxMin18AlphaNumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="18"/>
+            <xs:maxLength value="18"/>
+            <xs:pattern value="[-a-zA-Z0-9]{1,18}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max10NumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="10"/>
+            <xs:pattern value="[0-9]{1,10}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max25Text">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="25"/>
+            <xs:pattern value="[0-9]{12}\,[0-9]{12}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MaxMin30NumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="30"/>
+            <xs:maxLength value="30"/>
+            <xs:pattern value="[0-9]{1,30}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SettleType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ST01"/>
+            <xs:enumeration value="ST02"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="PercentageRate">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(\d{1,1})|(\d{1,1}\.\d{1,6})"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="CurrencyAndAmount">
+        <xs:simpleContent>
+            <xs:extension base="CurrencyAndAmount_SimpleType">
+                <xs:attribute name="Ccy" type="CurrencyCode" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="CurrencyAndAmount_SimpleType">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value="(\d{1,16})|(\d{1,16}\.\d{1,2})"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CurrencyCode">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="CNY"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Max20AlphaNumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="20"/>
+            <xs:pattern value="[a-zA-Z0-9]{1,20}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ISODate">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:simpleType name="ISODateTime">
+        <xs:restriction base="xs:dateTime"/>
+    </xs:simpleType>
+    <xs:simpleType name="Max35AlphaNumericText">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+            <xs:pattern value="[a-zA-Z0-9]{1,35}"/>
+        </xs:restriction>
+    </xs:simpleType>
+	<xs:simpleType name="Signature">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MainBody"/>
+				<xs:element name="CdesSgntr" type="Signature"/>
+		<!--	<xs:element name="PtcptSgntr" type="Signature"/>-->
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MainBody">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="BrInfElmt" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BrInfElmt">
+		<xs:complexType>
+			<xs:sequence>
+			<xs:element name="AltrnTp" type="AltrnTp"/>
+			<xs:element name="AltrnTm" type="ISODateTime"/>
+			<xs:element name="OprTp" type="OprTp"/>
+			<xs:element name="MbrId" type="MaxMin6NumericText"/>
+			<xs:element name="BrId" type="MaxMin9NumericText"/>
+			<xs:element name="BrCd" type="MaxMin21NumericText"/>
+			<xs:element name="BrTp" type="BranchType"/>
+			<xs:element name="BrClss" type="BranchClass"/>
+			<!-- modify by kfzx-yuanf 1月版 20171123   机构中文全称由Max150Text改为Max60Text -->
+			<xs:element name="FullNmZh" type="Max60Text"/>
+			<xs:element name="FullNmEn" type="Max200Text" minOccurs="0"/>
+			<!-- modify by kfzx-yuanf 1月版 20171123   机构中文简称由Max90Text改为Max60Text -->
+			<xs:element name="ShrtNmZh" type="Max60Text"/>
+			<xs:element name="ShrtNmEn" type="Max90Text" minOccurs="0"/>
+			<xs:element name="SocCode" type="MaxMin18AlphaNumericText" minOccurs="0"/>
+			<xs:element name="PrCd" type="Province"/>
+			<xs:element name="BrCorpClss" type="CorpClass"/>
+			<xs:element name="BrLv" type="MaxMin1NumericText"/>
+			<xs:element name="ProdBegDt" type="ISODate" minOccurs="0"/>
+			<xs:element name="ProdEndDt" type="ISODate" minOccurs="0"/>
+			<xs:element name="BrSts" type="BrStatus"/>
+			<xs:element name="BrAcctSvcr" type="MaxMin12NumericText" minOccurs="0"/>
+			<xs:element name="BrAcctNm" type="Max30Text" minOccurs="0"/>
+			<xs:element name="BrAcctId" type="Max32AlphaNumericText" minOccurs="0"/>
+			<xs:element name="TxAcctId" type="Max32AlphaNumericText" minOccurs="0"/><!-- modify by kfzx-yuanf 1月版 20171115 修改原因： 虚拟资管法人机构没有账户信息 -->
+			<xs:element name="TxAcctSts" type="BrStatus" minOccurs="0"/><!-- modify by kfzx-yuanf 1月版 20171115 修改原因： 虚拟资管法人机构没有账户信息 -->
+			<xs:element name="RegAcctId" type="Max32AlphaNumericText" minOccurs="0"/><!-- modify by kfzx-yuanf 1月版 20171115 修改原因： 虚拟资管法人机构没有账户信息 -->
+			<xs:element name="RegAcctSts" type="BrStatus" minOccurs="0"/><!-- modify by kfzx-yuanf 1月版 20171115 修改原因： 虚拟资管法人机构没有账户信息 -->
+			<xs:element name="FAcctNo" type="Max32AlphaNumericText" minOccurs="0"/>
+			<xs:element name="NonBkAcctSvcr" type="MaxMin12NumericText" minOccurs="0"/>
+			<xs:element name="NonBkWdAcctNm" type="Max150Text" minOccurs="0"/>
+			<xs:element name="NonBkWdAcctId" type="Max32AlphaNumericText" minOccurs="0"/>
+			<xs:element name="EcdsAcctSvcr" type="MaxMin12NumericText" minOccurs="0"/>
+			<xs:element name="EcdsAcctId" type="Max32AlphaNumericText" minOccurs="0"/>
+			<xs:element name="CorpRep" type="Max60Text"/>
+			<xs:element name="RegCap" type="CurrencyAndAmountRegCap" minOccurs="0"/>
+			<xs:element name="Addr" type="Max60Text"/>
+			<xs:element name="Attn" type="Max20Text"/>
+			<xs:element name="Tel" type="Max20Text1"/>
+			<xs:element name="FxCd" type="Max20Text1"/>
+			<xs:element name="ZpCd" type="MaxMin6NumericText"/>
+			<xs:element name="Note" type="Max150Text" minOccurs="0"/>
+			<xs:element name="BrAdmId1" type="Max10AlphaNumericText" minOccurs="0"/>
+			<xs:element name="BrAdmNm1" type="Max50Text" minOccurs="0"/>
+			<xs:element name="BrAdmSts1" type="UserStatus" minOccurs="0"/>
+			<xs:element name="BrAdmId2" type="Max10AlphaNumericText" minOccurs="0"/>
+			<xs:element name="BrAdmNm2" type="Max50Text" minOccurs="0"/>
+			<xs:element name="BrAdmSts2" type="UserStatus" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9]{1,35}"/>
+		</xs:restriction>	
+	</xs:simpleType>		
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="AltrnTp">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AT01"/>
+			<xs:enumeration value="AT02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OprTp">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OT01"/>
+			<xs:enumeration value="OT02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin6NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="6"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="[0-9]{1,6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin9NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[0-9]{1,9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin21NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="21"/>
+			<xs:maxLength value="21"/>
+			<xs:pattern value="[0-9]{1,21}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BranchType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<!-- add by kfcs-yusx 4月版 20210126   新增机构类别字典项 2104版本 存托类机构新增 start -->
+			<xs:enumeration value="7"/><!-- 7-存托类非法人产品 -->
+			<xs:enumeration value="8"/><!-- 8-存托类虚拟系统参与者 -->
+			<!-- add by kfcs-yusx 4月版 20210126   新增机构类别字典项 2104版本 存托类机构新增 end -->
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- modify by kfzx-yuanf 1月版 20171222 按最新接口规范同步更改机构类型 -->
+	<xs:simpleType name="BranchClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="101"/>
+			<xs:enumeration value="201"/>
+			<xs:enumeration value="202"/>
+			<xs:enumeration value="203"/>
+			<xs:enumeration value="204"/>
+			<xs:enumeration value="205"/>
+			<xs:enumeration value="206"/>
+			<xs:enumeration value="207"/>
+			<xs:enumeration value="208"/>
+			<xs:enumeration value="301"/>
+			<xs:enumeration value="302"/>
+			<xs:enumeration value="303"/>
+			<xs:enumeration value="304"/>
+			<xs:enumeration value="305"/>
+			<xs:enumeration value="306"/>
+			<xs:enumeration value="307"/>
+			<xs:enumeration value="308"/>
+			<xs:enumeration value="309"/>
+			<xs:enumeration value="310"/>
+			<xs:enumeration value="311"/>
+			<xs:enumeration value="401"/>
+			<xs:enumeration value="402"/>
+			<xs:enumeration value="403"/>
+			<xs:enumeration value="404"/>
+			<xs:enumeration value="405"/>
+			<xs:enumeration value="406"/>
+			<xs:enumeration value="407"/>
+			<xs:enumeration value="408"/>
+			<xs:enumeration value="409"/>
+			<xs:enumeration value="410"/>
+			<xs:enumeration value="411"/>
+			<xs:enumeration value="412"/>
+			<xs:enumeration value="413"/>
+			<xs:enumeration value="501"/>
+			<xs:enumeration value="502"/>
+			<xs:enumeration value="503"/>
+			<xs:enumeration value="504"/>
+			<xs:enumeration value="505"/>
+			<xs:enumeration value="506"/>
+			<xs:enumeration value="507"/>
+			<xs:enumeration value="508"/>
+			<xs:enumeration value="509"/>
+			<xs:enumeration value="510"/>
+			<xs:enumeration value="511"/>
+			<xs:enumeration value="601"/>
+			<xs:enumeration value="602"/>
+			<xs:enumeration value="603"/>
+			<xs:enumeration value="604"/>
+			<xs:enumeration value="605"/>
+			<!-- <xs:enumeration value="606"/> -->
+			<!-- add by kfcs-yusx 4月版 20210126   新增机构类型字典项 2104版本 存托类机构新增 start -->
+			<xs:enumeration value="701"/><!-- 701-国有商业银行存托产品 -->
+			<xs:enumeration value="702"/><!-- 702-股份制商业银行存托产品 -->
+			<xs:enumeration value="703"/><!-- 703-外资银行存托产品 -->
+			<xs:enumeration value="704"/><!-- 704-城市商业银行存托产品 -->
+			<xs:enumeration value="705"/><!-- 705-民银银行存托产品 -->
+			<xs:enumeration value="706"/><!-- 706-农商行和农合行存托产品 -->
+			<xs:enumeration value="707"/><!-- 707-其他农村金融机构存托产品 -->
+			<xs:enumeration value="708"/><!-- 708-证券公司存托产品 -->
+			<xs:enumeration value="709"/><!-- 709-其他存托产品 -->
+			<xs:enumeration value="801"/><!-- 801-国有商业银行存托 -->
+			<xs:enumeration value="802"/><!-- 802-股份制商业银行存托 -->
+			<xs:enumeration value="803"/><!-- 803-外资银行存托 -->
+			<xs:enumeration value="804"/><!-- 804-城市商业银行存托 -->
+			<xs:enumeration value="805"/><!-- 805-民银银行存托 -->
+			<xs:enumeration value="806"/><!-- 806-农商行和农合行存托 -->
+			<xs:enumeration value="807"/><!-- 807-其他农村金融机构存托 -->
+			<xs:enumeration value="808"/><!-- 808-证券公司存托 -->
+			<xs:enumeration value="809"/><!-- 809-其他存托 -->
+			<!-- add by kfcs-yusx 4月版 20210126   新增机构类型字典项 2104版本 存托类机构新增 end -->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max150Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="150"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max200Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max90Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="90"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- modified by kfzx-yuanf 1801 20170907 统一社会信用代码支持-英文数字 -->
+	<xs:simpleType name="MaxMin18AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="18"/>
+			<xs:maxLength value="18"/>
+			<xs:pattern value="[-a-zA-Z0-9]{1,18}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- modified by kfzx-yuanf 1801 20171229 添加省份代码45 -->
+	<xs:simpleType name="Province">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="11"/>
+			<xs:enumeration value="12"/>
+			<xs:enumeration value="31"/>
+			<xs:enumeration value="50"/>
+			<xs:enumeration value="13"/>
+			<xs:enumeration value="14"/>
+			<xs:enumeration value="21"/>
+			<xs:enumeration value="22"/>
+			<xs:enumeration value="23"/>
+			<xs:enumeration value="32"/>
+			<xs:enumeration value="33"/>
+			<xs:enumeration value="34"/>
+			<xs:enumeration value="35"/>
+			<xs:enumeration value="36"/>
+			<xs:enumeration value="37"/>
+			<xs:enumeration value="41"/>
+			<xs:enumeration value="42"/>
+			<xs:enumeration value="43"/>
+			<xs:enumeration value="44"/>
+			<xs:enumeration value="45"/>
+			<xs:enumeration value="46"/>
+			<xs:enumeration value="51"/>
+			<xs:enumeration value="52"/>
+			<xs:enumeration value="53"/>
+			<xs:enumeration value="61"/>
+			<xs:enumeration value="62"/>
+			<xs:enumeration value="63"/>
+			<xs:enumeration value="15"/>
+			<xs:enumeration value="54"/>
+			<xs:enumeration value="64"/>
+			<xs:enumeration value="65"/>
+			<xs:enumeration value="81"/>
+			<xs:enumeration value="82"/>
+			<xs:enumeration value="71"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CorpClass">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CC00"/>
+			<xs:enumeration value="CC01"/>
+			<xs:enumeration value="CC02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin1NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1"/>
+			<xs:pattern value="[0-9]{1,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="BrStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ST01"/>
+			<xs:enumeration value="ST02"/>
+			<xs:enumeration value="ST03"/><!-- modify by kfzx-lijl1 1808 20180525 增加机构注销字典项 -->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin12NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="12"/>
+			<xs:maxLength value="12"/>
+			<xs:pattern value="[0-9]{1,12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max30Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max60Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max32AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,32}"/>
+		</xs:restriction>
+	<!--mod by kfzx-yuanf 1801 20170918  修改原因：注册资本在客户端为13位整数2位小数。-->
+	</xs:simpleType>
+		<xs:simpleType name="CurrencyAndAmount_SimpleType">
+		<xs:restriction base="xs:decimal">
+			<!-- <xs:pattern value="(\d{1,13})|(\d{1,13}\.)|(\d{1,12}\.\d{0,1})|(\d{1,11}\.\d{0,2})|(\.\d{1,2})"/> -->
+			<xs:pattern value="(\d{1,13})|(\d{1,13}\.\d{1,2})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CurrencyAndAmountRegCap">
+		<xs:simpleContent>
+			<xs:extension base="CurrencyAndAmount_SimpleType">
+				<xs:attribute name="Ccy" type="CurrencyCode" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="CurrencyCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="CNY"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max20Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max20Text1">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+			<xs:pattern value="[-0-9]{1,20}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max10AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max50Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UserStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="US01"/>
+			<xs:enumeration value="US02"/>
+			<xs:enumeration value="US03"/>
+		    <xs:enumeration value="US04"/><!-- modify by kfzx-lijl1 1808 20180608 增加用户注销字典项 -->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Signature">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

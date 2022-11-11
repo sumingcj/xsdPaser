@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MainBody" />
+				<xs:element name="CdesSgntr" type="Signature" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="Signature">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="MainBody">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MsgId"/>
+				<xs:element ref="OrgnlMsgId" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="BizCtrlInf" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="RspnrInf" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ExtInfs" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/>
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OrgnlMsgId">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id" type="Max35NumericText"/> 
+				<xs:element name="CreDtTm" type="ISODateTime"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BizCtrlInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PrcCd" type="MaxMin9AlphaNumericText"/>
+				<xs:element name="PrcMsg" type="Max256Text" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RspnrInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="RspnrInfs"  minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="CdtGrntInf"  minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="CorpCdtRatgsInf"  minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="CdtQryRspn"  minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RspnrInfs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="DrtPtcptInf"  minOccurs="0"/>
+				<xs:element ref="NoDrtPtcptInf"  minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DrtPtcptInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PtcptId" type="Max32AlphaNumericSymbolText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NoDrtPtcptInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max60Text" minOccurs="0"/>
+				<xs:element name="SocCode" type="Max32AlphaNumericSymbolText" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="Max60Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CdtGrntInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Tp" type="MaxMin2NumericText"/>
+				<xs:element name="Amt" type="CurrencyAndAmount"/>
+				<xs:element name="Dt" type="ISODate"/>
+				<xs:element name="BrId" type="MaxMin9NumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CorpCdtRatgsInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CdtRatgs" type="CreditRatings" minOccurs="0"/>
+				<xs:element name="RatgSub" type="Max60Text" minOccurs="0"/>
+				<xs:element name="RatgDueDt" type="ISODate" minOccurs="0"/>
+				<xs:element name="RgstAppBrId" type="MaxMin6NumericText"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CdtQryRspn">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AccptdAmtSncThsYr" type="CurrencyAndAmount" minOccurs="0"/>
+				<xs:element name="AccptdAmtAmtSncLastYr" type="CurrencyAndAmount" minOccurs="0"/>
+				<xs:element name="AccptdAmtAmtSncLast5Yr" type="CurrencyAndAmount" minOccurs="0"/>
+				<xs:element name="AccptdAmt" type="CurrencyAndAmount" minOccurs="0"/>
+				<xs:element name="DshnrAmtSncThsYr" type="CurrencyAndAmount" minOccurs="0"/>
+				<xs:element name="DshnrAmtSncLastYr" type="CurrencyAndAmount" minOccurs="0"/>
+				<xs:element name="DshnrAmtSncLast5Yr" type="CurrencyAndAmount" minOccurs="0"/>
+				<xs:element name="DshnrBal" type="CurrencyAndAmount" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ExtInfs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ExtInf"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="ExtInf">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" type="Max150Text"/>
+				<xs:element name="Value" type="Max150Text"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="CreditRatings">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9a-zA-Z\+\-]{1,3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="MaxMin2NumericText">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="01"/>
+			<xs:enumeration value="02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max35NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max5NumericText">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="5"/>
+			<xs:pattern value="[0-9]{5}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="MaxMin6NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="6" />
+			<xs:maxLength value="6" />
+			<xs:pattern value="[0-9]{1,6}" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="MaxMin12NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="12" />
+			<xs:maxLength value="12" />
+			<xs:pattern value="[0-9]{1,12}" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max32AlphaNumericNoSymbolText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9\-]{0,32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max32AlphaNumericSymbolText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9\-]{1,32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max150Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="150"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max256Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="SetDistTp">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DT01"/>
+			<xs:enumeration value="DT02"/>  
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CdSource">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CS01"/>
+			<xs:enumeration value="CS02"/>
+			<xs:enumeration value="CS03"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="SignUpMarkCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SU00"/>
+			<xs:enumeration value="SU01"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max32AlphaNumericNoText">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9]{32}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="MaxMin9AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="MaxMin6AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="6"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin32AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="32"/>
+			<xs:maxLength value="32"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,32}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	<xs:simpleType name="MaxMin4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="4"/>
+			<xs:maxLength value="4"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="MaxMin9NumericNoText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9" />
+			<xs:maxLength value="9" />
+			<xs:pattern value="[0-9]{1,9}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxMin9NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9" />
+			<xs:maxLength value="9" />
+			<xs:pattern value="[0-9]{1,9}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	
+	<xs:simpleType name="DraftTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AC01"/>
+			<xs:enumeration value="AC02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="BanEndorsementMarkCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PS01"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Max2000Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="MaxMin30NumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="30" />
+			<xs:maxLength value="30" />
+			<xs:pattern value="[0-9]{1,30}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="Max32AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="30" />
+			<xs:pattern value="[a-zA-Z0-9]{1,32}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="Max25Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="CurrencyAndAmount">
+		<xs:simpleContent>
+			<xs:extension base="CurrencyAndAmount_SimpleType">
+				<xs:attribute name="Ccy" type="CurrencyCode" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<xs:simpleType name="CurrencyCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CNY" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurrencyAndAmount_SimpleType">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value="(\d{1,16})|(\d{1,16}\.\d{1,2})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="BusiCategory">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BS03"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="PercentageRate">
+			<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="EndorTp">
+			<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+
+
+	<xs:simpleType name="CDMedia">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ME01"/>
+			<xs:enumeration value="ME02"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DistTp">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DT01"/>
+			<xs:enumeration value="DT02"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="StlResult">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="R20"/>
+			<xs:enumeration value="R21"/>
+			<xs:enumeration value="R23"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
